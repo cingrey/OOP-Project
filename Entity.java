@@ -19,13 +19,15 @@ public abstract class Entity extends Object{
     dice - (Random) implements dice generation for random outcomes based on player choices
         and character statistics
     abilities - (String array) stores specific action options
+    isAlive - (boolean) indicates if currHP is <= 0
     */
     protected String name;
     protected int currHP;
     protected int maxHP;
     protected int armor_class;
-    protected Random dice = new Random();
-    protected ArrayList<String> abilities = new ArrayList<String>();
+    protected Random dice;
+    protected ArrayList<String> abilities;
+    protected boolean isAlive;
 
     //accessor methods
     public String getName(){
@@ -42,6 +44,9 @@ public abstract class Entity extends Object{
     }
     public ArrayList<String> getAbilities(){
         return abilities;
+    }
+    public boolean getStatus(){
+        return isAlive;
     }
 
     //mutator methods
@@ -90,18 +95,31 @@ public abstract class Entity extends Object{
         */
         return dice.nextInt(20)+1;
     }
+    public void display_options(){
+        System.out.println("Abilities");
+        for(int i=0; i<abilities.size();i++){
+            System.out.println(abilities.get(i)+"\n");
+        }
+    }
+
+    public void takeDMG(int damage){
+        System.out.println(name + " takes " + damage + " damage!");
+        setCurrHP(currHP-damage);
+        System.out.println(name + " has " + currHP + " remaining!");
+        if (currHP<0){
+            isAlive = false;
+            System.out.println(name + " has died!");
+        }
+    }
 
     public abstract void attack(Entity target);
     //simulates, describes, and resolves an attack between the player and
     //opposing entity
     //to be overridden by subclasses per their unique design features
 
-    public abstract int roll_damage();
-    //calculates how much damage a character's attack/ability would deal;
-    //should call generic_roll
-
     public abstract void heal();
     //represents player's attempt to heal character; should call setCurrHP
+    //should not allow currHP to exceed maxHP
 
     @Override
     public String toString(){
