@@ -38,12 +38,12 @@ public class Troll extends Entity{
         }
         if (currHP<0){
             isAlive = false;
-            System.out.println(name + " is dead!");
+            //System.out.println(name + " is dead!");
         }
     }
     @Override
     public void attack(Entity target){
-        if (currHP<=maxHP){
+        if (currHP<=maxHP & !bloodied){
             heal();
         }
         if (!bloodied){
@@ -57,6 +57,16 @@ public class Troll extends Entity{
         }
         else{
             flurry(target);
+        }
+    }
+    @Override
+    public void heal(){
+        System.out.println("Some of the troll's wounds are closing up!");
+        if ((currHP+10)>=maxHP){
+            currHP = maxHP;
+        }
+        else{
+            currHP += 10;
         }
     }
     public void bite(Entity target, int modifier){
@@ -83,20 +93,8 @@ public class Troll extends Entity{
     }
     public void flurry(Entity target){
         System.out.println("The troll makes wild attacks in its bloodied state!");
+        claw(target, 3);
+        claw(target, 3);
         bite(target, 3);
-        claw(target, 3);
-        claw(target, 3);
-    }
-    @Override
-    public void heal(){
-        if (!bloodied){
-            System.out.println("Some of Troll's wounds are healing!");
-            if ((currHP+10)>=maxHP){
-                currHP = maxHP;
-            }
-            else{
-                currHP += 10;
-            }
-        }
     }
 }
