@@ -95,6 +95,15 @@ public abstract class Entity extends Object{
         */
         return dice.nextInt(20)+1;
     }
+    public boolean check(int difficulty, int modifier){
+        /*
+        Simulates basic success check in game. Returns True if roll beats success threshold. False, otherwise
+        Parameters:
+        difficulty - (int) number to meet/beat to succeed in effort
+        modifier - (int) represents entity's aptitude for specific effort; flat addition to d20 roll
+        */
+        return (roll_d20()+modifier) >= difficulty;
+    }
     public void display_actions(){
         //Prints brief descriptions for each of the entity's combat abilities
         System.out.println("Abilities");
@@ -112,7 +121,7 @@ public abstract class Entity extends Object{
         System.out.println(name + " has " + currHP + " remaining!");
         if (currHP<0){
             isAlive = false;
-            System.out.println(name + " has died!");
+            System.out.println(name + " is dead!");
         }
     }
 
