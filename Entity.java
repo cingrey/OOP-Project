@@ -121,7 +121,7 @@ public abstract class Entity extends Object{
         System.out.println(name + " has " + currHP + " remaining!");
         if (currHP<0){
             isAlive = false;
-            System.out.println(name + " is dead!");
+            //System.out.println(name + " is dead!");
         }
     }
 
