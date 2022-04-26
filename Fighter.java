@@ -14,8 +14,8 @@ public class Fighter extends Entity{
     bracing - (boolean) indicates if character is bracing for an incoming attack
     fury - (boolean) resource/indicator for empowered attacks
     */
-    private boolean bracing = false;
-    private boolean fury = false;
+    private boolean bracing;
+    private boolean fury;
     public Fighter(String name){
         this.name = name;
         maxHP = 58;
@@ -27,6 +27,8 @@ public class Fighter extends Entity{
         abilities.add("Crossbow - basic ranged attack");
         abilities.add("Brace - reduces incoming damage; prepares fury");
         isAlive = true;
+        bracing = false;
+        fury = false;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class Fighter extends Entity{
         //Narrates melee attack with sword
         //fury will double attack damage;
         System.out.println(name + " swings their sword!");
-        if (roll_d20()+7 >= target.getArmorClass()){
+        if (check(target.getArmorClass(),7)){
             System.out.println("And lands a solid hit!");
             int damage = generic_roll(1,8)+3;
             if(fury){
@@ -79,7 +81,7 @@ public class Fighter extends Entity{
         //Narrates ranged attack with crossbow
         //fury will allow immediate second attack
         System.out.println(name + " fires their crossbow!");
-        if (roll_d20()+6 >= target.getArmorClass()){
+        if (check(target.getArmorClass(), 6)){
             int damage = generic_roll(1,10)+2;
             System.out.println("And lands a solid hit!");
             target.takeDMG(damage);
@@ -119,7 +121,7 @@ public class Fighter extends Entity{
         System.out.println(name + " has " + currHP + " remaining!");
         if (currHP<0){
             isAlive = false;
-            System.out.println(name + " has died!");
+            System.out.println(name + " is dead!");
         }
     }
 
