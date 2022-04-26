@@ -18,7 +18,7 @@ public abstract class Entity extends Object{
     armor_class - (int) represents the character's overall ability to avoid/deflect attacks
     dice - (Random) implements dice generation for random outcomes based on player choices
         and character statistics
-    abilities - (String array) stores specific action options
+    abilities - (ArrayList<String>) stores specific action options
     isAlive - (boolean) indicates if currHP is <= 0
     */
     protected String name;
@@ -95,7 +95,8 @@ public abstract class Entity extends Object{
         */
         return dice.nextInt(20)+1;
     }
-    public void display_options(){
+    public void display_actions(){
+        //Prints brief descriptions for each of the entity's combat abilities
         System.out.println("Abilities");
         for(int i=0; i<abilities.size();i++){
             System.out.println(abilities.get(i)+"\n");
@@ -103,6 +104,9 @@ public abstract class Entity extends Object{
     }
 
     public void takeDMG(int damage){
+        //Narrates entity being injured and checks if it is dead
+        //Parameter:
+        //damage - (int) amount of damage to be applied to currHP
         System.out.println(name + " takes " + damage + " damage!");
         setCurrHP(currHP-damage);
         System.out.println(name + " has " + currHP + " remaining!");
@@ -116,6 +120,8 @@ public abstract class Entity extends Object{
     //simulates, describes, and resolves an attack between the player and
     //opposing entity
     //to be overridden by subclasses per their unique design features
+    //Parameter:
+    //target - (Entity) character/creature attack will deal damage to
 
     public abstract void heal();
     //represents player's attempt to heal character; should call setCurrHP
