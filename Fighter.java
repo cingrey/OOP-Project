@@ -30,7 +30,23 @@ public class Fighter extends Entity{
         bracing = false;
         fury = false;
     }
-
+    @Override
+    public void takeDMG(int damage){
+        //bracing flag allows character to halve next incoming damage and trigger fury flag
+        if (bracing){
+            damage /= 2;
+            fury = true;
+            System.out.println("The blow heightens " + name + "'s fury!");
+            bracing = false;
+        }
+        System.out.println(name + " takes " + damage + " damage!");
+        setCurrHP(currHP-damage);
+        System.out.println(name + " has " + currHP + " remaining!");
+        if (currHP<0){
+            isAlive = false;
+            //System.out.println(name + " is dead!");
+        }
+    }
     @Override
     public void attack(Entity target){
         /*
@@ -57,7 +73,17 @@ public class Fighter extends Entity{
         }
         s.close();
     }
-
+    @Override
+    public void heal(){
+        int newHP = dice.nextInt(10)+3;
+        if ((currHP+newHP)<=maxHP){
+            currHP = maxHP;
+        }
+        else{
+            currHP += newHP;
+        }
+        System.out.println(name + " tends to their wounds and recovers " + newHP + " hit points.");
+    }
     public void swordATK(Entity target){
         //Narrates melee attack with sword
         //fury will double attack damage;
@@ -76,7 +102,6 @@ public class Fighter extends Entity{
             System.out.println("But misses!");
         }
     }
-
     public void crossbowATK(Entity target){
         //Narrates ranged attack with crossbow
         //fury will allow immediate second attack
@@ -95,7 +120,6 @@ public class Fighter extends Entity{
             crossbowATK(target);
         }
     }
-
     public void brace(){
         //set bracing to true if it is false
         if (!bracing){
@@ -105,35 +129,5 @@ public class Fighter extends Entity{
         else{
             System.out.println("Oops! " + name + " is already bracing!");
         }
-    }
-
-    @Override
-    public void takeDMG(int damage){
-        //bracing flag allows character to halve next incoming damage and trigger fury flag
-        if (bracing){
-            damage /= 2;
-            fury = true;
-            System.out.println("The blow heightens " + name + "'s fury!");
-            bracing = false;
-        }
-        System.out.println(name + " takes " + damage + " damage!");
-        setCurrHP(currHP-damage);
-        System.out.println(name + " has " + currHP + " remaining!");
-        if (currHP<0){
-            isAlive = false;
-            System.out.println(name + " is dead!");
-        }
-    }
-
-    @Override
-    public void heal(){
-        int newHP = dice.nextInt(10)+3;
-        if ((currHP+newHP)<=maxHP){
-            currHP = maxHP;
-        }
-        else{
-            currHP += newHP;
-        }
-        System.out.println(name + " tends to their wounds and recovers " + newHP + " hit points.");
     }  
 }
