@@ -22,7 +22,7 @@ public class Fighter extends Entity{
         currHP = maxHP;
         armor_class = 17;
         dice = new Random();
-        abilities = new ArrayList<String>();
+        abilities = new ArrayList<String>(3);
         abilities.add("Sword - basic melee strike; empowered by fury");
         abilities.add("Crossbow - basic ranged attack");
         abilities.add("Brace - reduces incoming damage; prepares fury");
@@ -31,6 +31,10 @@ public class Fighter extends Entity{
 
     @Override
     public void attack(Entity target){
+        /*
+        Prompts user to choose from combat options/actions
+        Narrates outcome of choice
+        */
         Scanner s = new Scanner(System.in);
         System.out.println("What is "+name+"'s next move?");
         display_actions();
@@ -53,6 +57,8 @@ public class Fighter extends Entity{
     }
 
     public void swordATK(Entity target){
+        //Narrates melee attack with sword
+        //fury will double attack damage;
         System.out.println(name + " swings their sword!");
         if (roll_d20()+7 >= target.getArmorClass()){
             System.out.println("And lands a solid hit!");
@@ -70,6 +76,8 @@ public class Fighter extends Entity{
     }
 
     public void crossbowATK(Entity target){
+        //Narrates ranged attack with crossbow
+        //fury will allow immediate second attack
         System.out.println(name + " fires their crossbow!");
         if (roll_d20()+6 >= target.getArmorClass()){
             int damage = generic_roll(1,10)+2;
