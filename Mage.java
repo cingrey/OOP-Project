@@ -3,7 +3,6 @@ Professor - A. Nuzen
 Author: Team COBOL
 This class implements a Mage character for the game.
 */
-package COBOL;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -47,6 +46,11 @@ public class Mage extends Entity{
 
     public void cast_spell(){
         /* A form of attack  */
-        
+
+    }
+
+    @Override
+    public void heal(){
+
     }
 }

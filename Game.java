@@ -1,3 +1,8 @@
+/*COMP305 - Game
+Professor - A. Nuzen
+Author: Team COBOL
+This is the driver class of the game.
+*/
 
 import java.util.Scanner;
 import java.lang.NumberFormatException;
@@ -7,7 +12,7 @@ public class Game {
     public static void main(String args[]){
         Scanner s = new Scanner(System.in);
 
-        System.out.println("Welcome to our RPG.");
+        System.out.println("Welcome to C and C.");
         System.out.println("There will be a series of prompts, to answer each simply type a number.");
         System.out.println("At any point you can type \"q\" to quit.");
         String prompt = "Would you like to [1] play with the default character or [2] create your own: ";
@@ -19,15 +24,23 @@ public class Game {
         else{
             entity = getCustomCharacter();
         }
-        
+        System.out.println(entity);
+        System.out.println("Thank you for playing!");
         s.close();
     }  
 
+     /*
+     * returns custom character
+     */
     private static Entity getCustomCharacter(){
-        //TODO implement this function
+        //TODO implement this function in sprint 2
         return new Fighter("Fighter");
     }
 
+    /*
+     * returns an integer representing the choice
+     * the user makes and parses their input
+     */
     private static int getChoice(Scanner s, int num_options, String prompt){
         int choice = 0;
         while(!(1 <= choice && choice <= num_options)){
@@ -42,6 +55,9 @@ public class Game {
         return choice;
     }
 
+    /*
+     * Prompts user if they would really like to quit.
+     */
     private static void ask_quit(Scanner s){
         System.out.print("Are you sure you would like to quit? [y/n]: ");
         char c = s.nextLine().charAt(0);

@@ -3,7 +3,6 @@ Professor - A. Nuzen
 Author: Team COBOL
 This class implements a Fighter character for the game.
 */
-package COBOL;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;

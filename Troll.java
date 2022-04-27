@@ -5,7 +5,6 @@ This programs defines a Troll class that will act as the enemy for the player in
 Unlike the subclasses of Entity meant for player control. This class should operate in the game
 without user input.
 */
-package COBOL;
 import java.util.Random;
 import java.util.ArrayList;
 

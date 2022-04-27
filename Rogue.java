@@ -3,7 +3,6 @@ Professor - A. Nuzen
 Author: Team COBOL
 This class implements a Rogue character for the game.
 */
-package COBOL;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ public class Rogue extends Entity{
     sneak - (boolean) indicates if character is
     */
     private boolean sneak;
-    public Fighter(String name){
+    public Rogue(String name){
         this.name = name;
 
         //abilities = new ArrayList<String>(3);
@@ -37,5 +36,10 @@ public class Rogue extends Entity{
 
     public void sneak(){
         /*   */
+    }
+
+    @Override
+    public void heal(){
+         
     }
 }
