@@ -4,7 +4,7 @@ Author: Team COBOL
 This programs defines an abstract Entity class that will establish base
 statistics and options for all active entities in our text-based game system
 */
-package COBOL;
+
 import java.util.Random;
 import java.util.ArrayList;
 
