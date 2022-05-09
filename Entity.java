@@ -21,13 +21,13 @@ public abstract class Entity extends Object{
     abilities - (ArrayList<String>) stores specific action options
     isAlive - (boolean) indicates if currHP is <= 0
     */
-    protected String name;
-    protected int currHP;
-    protected int maxHP;
-    protected int armor_class;
+    private String name;
+    private int currHP;
+    private int maxHP;
+    private int armor_class;
     protected Random dice;
-    protected ArrayList<String> abilities;
-    protected boolean isAlive;
+    private ArrayList<String> abilities;
+    private boolean isAlive;
 
     //accessor methods
     public String getName(){
@@ -70,6 +70,9 @@ public abstract class Entity extends Object{
     }
     public void removeAbility(String ability){
         abilities.remove(ability);
+    }
+    public void setStatus(boolean status){
+        isAlive = status;
     }
 
     public int generic_roll(int num, int base){

@@ -16,16 +16,17 @@ public class Fighter extends Entity{
     private boolean bracing;
     private boolean fury;
     public Fighter(String name){
-        this.name = name;
-        maxHP = 58;
-        currHP = maxHP;
-        armor_class = 17;
+        setName(name);//this.name = name;
+        setMaxHP(58);//maxHP = 58;
+        setCurrHP(getMaxHP());//currHP = maxHP;
+        setArmorClass(17);//armor_class = 17;
         dice = new Random();
-        abilities = new ArrayList<String>(3);
-        abilities.add("Sword - basic melee strike; empowered by fury");
-        abilities.add("Crossbow - basic ranged attack");
-        abilities.add("Brace - reduces incoming damage; prepares fury");
-        isAlive = true;
+        ArrayList<String> powers = new ArrayList<String>(3);
+        powers.add("Sword - basic melee strike; empowered by fury");
+        powers.add("Crossbow - basic ranged attack");
+        powers.add("Brace - reduces incoming damage; prepares fury");
+        setAbilities(powers);
+        setStatus(true);//isAlive = true;
         bracing = false;
         fury = false;
     }
@@ -35,15 +36,15 @@ public class Fighter extends Entity{
         if (bracing){
             damage /= 2;
             fury = true;
-            System.out.println("The blow heightens " + name + "'s fury!");
+            System.out.println("The blow heightens " + getName() + "'s fury!");
             bracing = false;
         }
-        System.out.println(name + " takes " + damage + " damage!");
-        setCurrHP(currHP-damage);
-        System.out.println(name + " has " + currHP + " remaining!");
-        if (currHP<0){
-            isAlive = false;
-            //System.out.println(name + " is dead!");
+        System.out.println(getName() + " takes " + damage + " damage!");
+        setCurrHP(getCurrHP()-damage);
+        System.out.println(getName() + " has " + getCurrHP() + " remaining!");
+        if (getCurrHP()<0){
+            setStatus(false);
+            //System.out.println(getName() + " is dead!");
         }
     }
     @Override
@@ -53,10 +54,10 @@ public class Fighter extends Entity{
         Narrates outcome of choice
         */
         Scanner s = new Scanner(System.in);
-        System.out.println("What is "+name+"'s next move?");
+        System.out.println("What is "+getName()+"'s next move?");
         display_actions();
         int choice = s.nextInt();
-        while (choice>abilities.size()){ //TODO: implement better validating and error handling
+        while (choice>getAbilities().size()){ //TODO: implement better validating and error handling
             System.out.println("Improper input. Please choose a numbered option:");
             display_actions();
             choice = s.nextInt();
@@ -75,18 +76,18 @@ public class Fighter extends Entity{
     @Override
     public void heal(){
         int newHP = dice.nextInt(10)+3;
-        if ((currHP+newHP)<=maxHP){
-            currHP = maxHP;
+        if ((getCurrHP()+newHP)<=getMaxHP()){
+            setCurrHP(getMaxHP());
         }
         else{
-            currHP += newHP;
+            setCurrHP(getCurrHP()+newHP);
         }
-        System.out.println(name + " tends to their wounds and recovers " + newHP + " hit points.");
+        System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
     public void swordATK(Entity target){
         //Narrates melee attack with sword
         //fury will double attack damage;
-        System.out.println(name + " swings their sword!");
+        System.out.println(getName() + " swings their sword!");
         if (check(target.getArmorClass(),7)){
             System.out.println("And lands a solid hit!");
             int damage = generic_roll(1,8)+3;
@@ -104,7 +105,7 @@ public class Fighter extends Entity{
     public void crossbowATK(Entity target){
         //Narrates ranged attack with crossbow
         //fury will allow immediate second attack
-        System.out.println(name + " fires their crossbow!");
+        System.out.println(getName() + " fires their crossbow!");
         if (check(target.getArmorClass(), 6)){
             int damage = generic_roll(1,10)+2;
             System.out.println("And lands a solid hit!");
@@ -123,10 +124,10 @@ public class Fighter extends Entity{
         //set bracing to true if it is false
         if (!bracing){
             bracing = true;
-            System.out.println(name + " braces for the next attack!"); 
+            System.out.println(getName() + " braces for the next attack!"); 
         }
         else{
-            System.out.println("Oops! " + name + " is already bracing!");
+            System.out.println("Oops! " + getName() + " is already bracing!");
         }
     }  
 }

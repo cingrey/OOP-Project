@@ -15,34 +15,36 @@ public class Troll extends Entity{
     */
     private boolean bloodied;
     public Troll(){
-        name = "Troll";
-        maxHP = 84;
-        currHP = maxHP;
-        armor_class = 15;
+        setName("Troll");//name = "Troll";
+        setMaxHP(84);//maxHP = 84;
+        setCurrHP(getMaxHP());//currHP = maxHP;
+        setArmorClass(15);//armor_class = 15;
         dice = new Random();
-        abilities = new ArrayList<String>();
-        abilities.add("bite - minor attack with teeth");
-        abilities.add("claw - brutal attack with sharp claws");
-        abilities.add("flurry - enraged flurry of attacks");
+        ArrayList<String> powers = new ArrayList<String>(3);
+        powers.add("bite - minor attack with teeth");
+        powers.add("claw - brutal attack with sharp claws");
+        powers.add("flurry - enraged flurry of attacks");
+        setAbilities(powers);
         bloodied = false;
+        setStatus(true);
     }
     @Override
     public void takeDMG(int damage){
         //if currHP falls below half maxHP, trigger bloodied flag
-        System.out.println(name + " takes " + damage + " damage!");
-        setCurrHP(currHP-damage);
-        if (currHP <= (maxHP/2)){
+        System.out.println(getName() + " takes " + damage + " damage!");
+        setCurrHP(getCurrHP()-damage);
+        if (getCurrHP() <= (getMaxHP()/2)){
             bloodied = true;
             System.out.println("It's wounds are no longer healing!\nBut it's now rampaging!");
         }
-        if (currHP<0){
-            isAlive = false;
+        if (getCurrHP()<0){
+            setStatus(false);
             //System.out.println(name + " is dead!");
         }
     }
     @Override
     public void attack(Entity target){
-        if (currHP<=maxHP & !bloodied){
+        if (getCurrHP()<=getMaxHP() & !bloodied){
             heal();
         }
         if (!bloodied){
@@ -61,11 +63,11 @@ public class Troll extends Entity{
     @Override
     public void heal(){
         System.out.println("Some of the troll's wounds are closing up!");
-        if ((currHP+10)>=maxHP){
-            currHP = maxHP;
+        if ((getCurrHP()+10)>=getMaxHP()){
+            setCurrHP(getMaxHP());
         }
         else{
-            currHP += 10;
+            setCurrHP(getMaxHP()+10);
         }
     }
     public void bite(Entity target, int modifier){
