@@ -6,51 +6,144 @@ This class implements a Mage character for the game.
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+ 
 public class Mage extends Entity{
     /*
     Subclass variables:
-    mana - (int) 
+    mana - (int)
     */
-    public int mana;
+    private int mana;
+    private final int MANA_MAX = 32;
     public Mage(String name){
         this.name = name;
-
+        maxHP = 37;
+        currHP = maxHP;
+        armor_class = 11;
+        dice = new Random();
         abilities = new ArrayList<String>(1);
-        abilities.add("Cast Spell - ");
+        abilities.add("Chromatic Orb - Versatile elemental attack; costs 4 mana");
+        abilities.add("Magic Missile - Low damage but guaranteed hit; costs 4 mana");
+        abilities.add("Shatter - Thunderous burst; costs 6 mana");
+        abilities.add("Necrotic Grasp - Hard-to-hit life drain; costs 10 mana");
         isAlive = true;
+        mana = MANA_MAX;
     }
-
+    public boolean spendMana(int cost){
+        //checks if character has enough mana to cast spell
+        //if so, subtract mana according to listed costs
+        if (cost<=mana){
+            mana -= cost;
+            System.out.println("This spell leaves " + name + " at " + mana + " mana!");
+            return true;
+        }
+        else{
+            System.out.println(name + " doesn't have enough mana to cast this spell!");
+            return false;
+        }
+    }
     @Override
     public void attack(Entity target){
         /*
         Prompts user to choose from combat options/actions
         Narrates outcome of choice
         */
-
+ 
         Scanner s = new Scanner(System.in);
         System.out.println("What is "+name+"'s next move?");
         display_actions();
         int choice = s.nextInt();
-
+ 
         while (choice>abilities.size()){ //TODO: implement better validating and error handling
             System.out.println("Improper input. Please choose a numbered option:");
             display_actions();
             choice = s.nextInt();
         }
         if (choice==1){
-            cast_spell();
+            ChromaticOrb(target);
         }
-    
+        if (choice==2){
+            MagicMissile(target);
+        }
+        if (choice==3){
+            Shatter(target);
+        }
+        if (choice==4){
+            NecroticGrasp(target);
+        }
+        s.close();
     }
-
-    public void cast_spell(){
-        /* A form of attack  */
-
-    }
-
     @Override
     public void heal(){
+        int newHP = dice.nextInt(6)+1;
+        if ((currHP+newHP)<=maxHP){
+            currHP = maxHP;
+        }
+        else{
+            currHP += newHP;
+        }
+        if ((mana+newHP)<=MANA_MAX){
+            mana = MANA_MAX;
+        }
+        else{
+            mana += newHP;
+        }
+        System.out.println(name + " channels free mana to recover " + newHP + "hit points and mana!");
+    }
+    @Override
+    public String toString() {
+        String stats = super.toString();
+        stats += "Mana: " + mana + "/" + MANA_MAX;
+        return stats;
+    }
 
+    public void ChromaticOrb(Entity target){
+        //Narrates elemental orb throw
+        if (spendMana(4)){
+            System.out.println(name + " launches an orb of chaotic energy!");
+            if (check(target.getArmorClass(),6)){
+                int damage = generic_roll(3,8);
+                System.out.println("And hits!");
+                target.takeDMG(damage);
+            }
+            else{
+                System.out.println("But it misses its target!");
+            }
+        }
+    }
+    public void MagicMissile(Entity target){
+        //Narrates magical homing attack
+        if (spendMana(4)){
+            System.out.println(name + " sends 3 magical homing bolts from their fingers!");
+            int damage = (generic_roll(1,4)+1)*3;
+            System.out.println("They dig into the target!");
+            target.takeDMG(damage);
+        }
+    }
+    public void Shatter(Entity target){
+        //Narrates explosion attack
+        if (spendMana(6)){
+            System.out.println(name + " engulfs the enemy in an explosion!");
+            int damage = generic_roll(3,8);
+            if (!(check(target.getArmorClass(),6))){
+                System.out.println("The enemy used cover to mitigate the damage!");
+                damage /= 2;
+            }
+            target.takeDMG(damage);
+        }
+    }
+    public void NecroticGrasp(Entity target){
+        //Narrates necrotic melee attack
+        if (spendMana(10)){
+            System.out.println(name + " envelopes their hands with necrotic energy and swipes!");
+            if (check(target.getArmorClass(),6)){
+                int damage = target.getCurrHP()/2;
+                System.out.println("And hits, draining the target's vitality!");
+                target.takeDMG(damage);
+                heal();
+            }
+            else{
+                System.out.println("But they miss!");
+            }
+        }
     }
 }

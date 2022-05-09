@@ -21,6 +21,9 @@ public class Game {
         if (choice == 1) {
             entity = new Fighter("Fighter");
         }
+        if (choice == 2) {
+            entity = new Mage("Mage");
+        }
         else{
             entity = getCustomCharacter();
         }
