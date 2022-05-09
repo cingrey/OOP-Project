@@ -53,7 +53,6 @@ public class Mage extends Entity{
         System.out.println("What is "+getName()+"'s next move?");
         display_actions();
         int choice = s.nextInt();
- 
         while (choice>getAbilities().size()){ //TODO: implement better validating and error handling
             System.out.println("Improper input. Please choose a numbered option:");
             display_actions();

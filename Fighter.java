@@ -39,13 +39,7 @@ public class Fighter extends Entity{
             System.out.println("The blow heightens " + getName() + "'s fury!");
             bracing = false;
         }
-        System.out.println(getName() + " takes " + damage + " damage!");
-        setCurrHP(getCurrHP()-damage);
-        System.out.println(getName() + " has " + getCurrHP() + " remaining!");
-        if (getCurrHP()<0){
-            setStatus(false);
-            //System.out.println(getName() + " is dead!");
-        }
+        super.takeDMG(damage);
     }
     @Override
     public void attack(Entity target){

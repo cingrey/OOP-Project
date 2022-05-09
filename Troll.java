@@ -31,15 +31,10 @@ public class Troll extends Entity{
     @Override
     public void takeDMG(int damage){
         //if currHP falls below half maxHP, trigger bloodied flag
-        System.out.println(getName() + " takes " + damage + " damage!");
-        setCurrHP(getCurrHP()-damage);
-        if (getCurrHP() <= (getMaxHP()/2)){
+        super.takeDMG(damage);
+        if (getStatus() && getCurrHP()<=(getMaxHP()/2)){
             bloodied = true;
             System.out.println("It's wounds are no longer healing!\nBut it's now rampaging!");
-        }
-        if (getCurrHP()<0){
-            setStatus(false);
-            //System.out.println(name + " is dead!");
         }
     }
     @Override
