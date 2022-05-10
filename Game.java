@@ -21,11 +21,8 @@ public class Game {
         if (choice == 1) {
             entity = new Fighter("Fighter");
         }
-        if (choice == 2) {
-            entity = new Mage("Mage");
-        }
         else{
-            entity = getCustomCharacter();
+            entity = getCustomCharacter(s);
         }
         System.out.println(entity);
         entity.attack(entity);
@@ -36,9 +33,16 @@ public class Game {
      /*
      * returns custom character
      */
-    private static Entity getCustomCharacter(){
+    private static Entity getCustomCharacter(Scanner s){
         //TODO implement this function in sprint 2
-        return new Fighter("Fighter");
+        int choice = getChoice(s, 3, "Would you like to be a [1] Fighter, [2] Mage, [3] Rogue: ");
+        if (choice == 1){
+            return new Fighter("Fighter");
+        }
+        if (choice == 2){
+            return new Mage("Mage");
+        }
+        return new Rogue("Rogue");
     }
 
     /*
