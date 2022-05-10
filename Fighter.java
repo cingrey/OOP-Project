@@ -3,7 +3,6 @@ Professor - A. Nuzen
 Author: Team COBOL
 This class implements a Fighter character for the game.
 */
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,7 +19,6 @@ public class Fighter extends Entity{
         setMaxHP(58);//maxHP = 58;
         setCurrHP(getMaxHP());//currHP = maxHP;
         setArmorClass(17);//armor_class = 17;
-        dice = new Random();
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("Sword - basic melee strike; empowered by fury");
         powers.add("Crossbow - basic ranged attack");
@@ -69,7 +67,7 @@ public class Fighter extends Entity{
     }
     @Override
     public void heal(){
-        int newHP = dice.nextInt(10)+3;
+        int newHP = generic_roll(1,10)+3;
         if ((getCurrHP()+newHP)<=getMaxHP()){
             setCurrHP(getMaxHP());
         }

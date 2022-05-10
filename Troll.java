@@ -5,7 +5,6 @@ This programs defines a Troll class that will act as the enemy for the player in
 Unlike the subclasses of Entity meant for player control. This class should operate in the game
 without user input.
 */
-import java.util.Random;
 import java.util.ArrayList;
 
 public class Troll extends Entity{
@@ -19,7 +18,6 @@ public class Troll extends Entity{
         setMaxHP(84);//maxHP = 84;
         setCurrHP(getMaxHP());//currHP = maxHP;
         setArmorClass(15);//armor_class = 15;
-        dice = new Random();
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("bite - minor attack with teeth");
         powers.add("claw - brutal attack with sharp claws");
@@ -43,7 +41,7 @@ public class Troll extends Entity{
             heal();
         }
         if (!bloodied){
-            int attack = dice.nextInt(2);
+            int attack = generic_roll(1,2);
             if (attack==0){
                 bite(target, 7);
             }

@@ -25,7 +25,7 @@ public abstract class Entity extends Object{
     private int currHP;
     private int maxHP;
     private int armor_class;
-    protected Random dice;
+    private Random dice = new Random();
     private ArrayList<String> abilities;
     private boolean isAlive;
 
@@ -109,9 +109,9 @@ public abstract class Entity extends Object{
     }
     public void display_actions(){
         //Prints brief descriptions for each of the entity's combat abilities
-        System.out.println("Abilities");
+        System.out.println("Actions:");
         for(int i=0; i<abilities.size();i++){
-            System.out.println(abilities.get(i)+"\n");
+            System.out.println(abilities.get(i));
         }
     }
 

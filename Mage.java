@@ -3,7 +3,6 @@ Professor - A. Nuzen
 Author: Team COBOL
 This class implements a Mage character for the game.
 */
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
  
@@ -19,7 +18,6 @@ public class Mage extends Entity{
         setMaxHP(37);//maxHP = 37;
         setCurrHP(getMaxHP());//currHP = maxHP
         setArmorClass(11);//armor_class = 11;
-        dice = new Random();
         ArrayList<String> powers = new ArrayList<String>(4);
         powers.add("Chromatic Orb - Versatile elemental attack; costs 4 mana");
         powers.add("Magic Missile - Low damage but guaranteed hit; costs 4 mana");
@@ -74,7 +72,7 @@ public class Mage extends Entity{
     }
     @Override
     public void heal(){
-        int newHP = dice.nextInt(6)+1;
+        int newHP = generic_roll(1,6)+1;
         if ((getCurrHP()+newHP)<=getMaxHP()){
             setCurrHP(getMaxHP());
         }
@@ -113,7 +111,7 @@ public class Mage extends Entity{
     public void MagicMissile(Entity target){
         //Narrates magical homing attack
         if (spendMana(4)){
-            System.out.println(getName() + " sends 3 magical homing bolts from their fingers!");
+            System.out.println(getName() + " shoots 3 magical homing bolts from their fingers!");
             int damage = (generic_roll(1,4)+1)*3;
             System.out.println("They dig into the target!");
             target.takeDMG(damage);
@@ -134,10 +132,10 @@ public class Mage extends Entity{
     public void NecroticGrasp(Entity target){
         //Narrates necrotic melee attack
         if (spendMana(10)){
-            System.out.println(getName() + " envelopes their hands with necrotic energy and swipes!");
+            System.out.println(getName() + " envelopes their hands with necrotic energy and reaches out!");
             if (check(target.getArmorClass(),6)){
                 int damage = target.getCurrHP()/2;
-                System.out.println("And hits, draining the target's vitality!");
+                System.out.println("And touches, draining the target's vitality!");
                 target.takeDMG(damage);
                 heal();
             }

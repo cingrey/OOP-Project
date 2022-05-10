@@ -3,7 +3,6 @@ Professor - A. Nuzen
 Author: Team COBOL
 This class implements a Rogue character for the game.
 */
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,7 +18,6 @@ public class Rogue extends Entity{
         setMaxHP(45);
         setCurrHP(getMaxHP());
         setArmorClass(14);
-        dice = new Random();
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("Ambush - calculated attack; more damage if hidden");
         powers.add("Analyze - gain insight into target; makes next attack more likely to hit");
@@ -65,7 +63,7 @@ public class Rogue extends Entity{
     }
     @Override
     public void heal(){
-        int newHP = dice.nextInt(8)+2;
+        int newHP = generic_roll(1,8)+2;
         if ((getCurrHP()+newHP)<=getMaxHP()){
             setCurrHP(getMaxHP());
         }

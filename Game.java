@@ -28,6 +28,7 @@ public class Game {
             entity = getCustomCharacter();
         }
         System.out.println(entity);
+        entity.attack(entity);
         System.out.println("Thank you for playing!");
         s.close();
     }  
