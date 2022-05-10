@@ -9,7 +9,8 @@ import java.util.Scanner;
 public class Rogue extends Entity{
     /*
     Subclass variables:
-    sneak - (boolean) indicates if character is
+    sneak - (boolean) indicates if character is hiding; increases damage of next ambush action as well as armor_class
+    insight - (boolean) indicates if character has advantage for the next attack; more likely to land next ambush
     */
     private boolean sneak;
     private boolean insight;
@@ -75,12 +76,10 @@ public class Rogue extends Entity{
 
     public void ambush(Entity target){
         System.out.println(getName() + " tries to stab the enemy!");
-        int modifier = 6;
         if (insight){
             System.out.println("Attacking a weak point!");
-            modifier = 8;
         }
-        if (check(target.getArmorClass(), modifier)){
+        if (check(target.getArmorClass(), 6) || check(target.getArmorClass(), 6)){
             System.out.println("Successful strike!");
             int damage = generic_roll(1,6)+3;
             if (sneak){
