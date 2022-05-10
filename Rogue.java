@@ -76,10 +76,12 @@ public class Rogue extends Entity{
 
     public void ambush(Entity target){
         System.out.println(getName() + " tries to stab the enemy!");
+        boolean advantage = false;
         if (insight){
             System.out.println("Attacking a weak point!");
+            advantage = check(target.getArmorClass(), 6);
         }
-        if (check(target.getArmorClass(), 6) || check(target.getArmorClass(), 6)){
+        if (check(target.getArmorClass(), 6) || advantage){
             System.out.println("Successful strike!");
             int damage = generic_roll(1,6)+3;
             if (sneak){

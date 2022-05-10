@@ -90,7 +90,7 @@ public class Mage extends Entity{
     @Override
     public String toString() {
         String stats = super.toString();
-        stats += "Mana: " + mana + "/" + MANA_MAX;
+        stats += "Mana: " + mana + "/" + MANA_MAX + "\n";
         return stats;
     }
 
