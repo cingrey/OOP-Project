@@ -26,6 +26,18 @@ public class Troll extends Entity{
         bloodied = false;
         setStatus(true);
     }
+
+    //accessor method
+    public boolean isBloodied(){
+        return bloodied;
+    }
+    
+    //mutator method
+    public void setBloodied(boolean bloodied){
+        this.bloodied = bloodied;
+    }
+
+    //Overridden methods
     @Override
     public void takeDMG(int damage){
         //if currHP falls below half maxHP, trigger bloodied flag
@@ -64,7 +76,12 @@ public class Troll extends Entity{
         //Troll heals flat 10 HP
         System.out.println("Some of the troll's wounds are closing up!");
         setCurrHP(getMaxHP()+10);
+        if (getCurrHP()>=(getMaxHP()/2)){
+            bloodied = false;
+        }
     }
+
+    //new methods to implement attack options
     public void bite(Entity target, int modifier){
         //Narrates attempt to bite target
         System.out.println("The troll goes for a bite!");

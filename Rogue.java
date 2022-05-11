@@ -28,6 +28,24 @@ public class Rogue extends Entity{
         sneak = false;
         insight = false;
     }
+
+    //accessor methods for new attributes
+    public boolean isSneak() {
+        return sneak;
+    }
+    public boolean hasInsight(){
+        return insight;
+    }
+
+    //mutator methods for new attributes
+    public void setSneak(boolean sneak){
+        this.sneak = sneak;
+    }
+    public void setInsight(boolean insight){
+        this.insight = insight;
+    }
+
+    //Overridden methods
     @Override
     public void takeDMG(int damage){
         super.takeDMG(damage);
@@ -70,6 +88,7 @@ public class Rogue extends Entity{
         System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
 
+    //new methods to implement attack options
     public void ambush(Entity target){
         /*
         Narrates ambush attempt

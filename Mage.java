@@ -27,21 +27,26 @@ public class Mage extends Entity{
         setStatus(true);
         mana = MANA_MAX;
     }
-    public boolean spendMana(int cost){
-        /*
-        checks if character has enough mana to cast spell
-        if so, subtract mana according to listed costs
-        */
-        if (cost<=mana){
-            mana -= cost;
-            System.out.println("This spell leaves " + getName() + " at " + mana + " mana!");
-            return true;
+
+    //accessor method
+    public int getMana(){
+        return mana;
+    }
+
+    //mutator method
+    public void setMana(int mana){
+        if (mana<0){
+            this.mana = 0;
+        }
+        else if (mana>MANA_MAX){
+            this.mana = MANA_MAX;
         }
         else{
-            System.out.println(getName() + " doesn't have enough mana to cast this spell!");
-            return false;
+            this.mana = mana;
         }
     }
+    
+    //Overridden methods
     @Override
     public void attack(Entity target){
         /*
@@ -76,12 +81,7 @@ public class Mage extends Entity{
         //Mage heals back HP based on 6-sided die with a modifier of +1
         int newHP = generic_roll(1,6)+1;
         setCurrHP(getCurrHP()+newHP);
-        if ((mana+newHP)<=MANA_MAX){
-            mana = MANA_MAX;
-        }
-        else{
-            mana += newHP;
-        }
+        setMana(mana+newHP);
         System.out.println(getName() + " channels free mana to recover " + newHP + "hit points and mana!");
     }
     @Override
@@ -92,6 +92,22 @@ public class Mage extends Entity{
         return stats;
     }
 
+    //new methods; implement spellcasting
+    public boolean spendMana(int cost){
+        /*
+        checks if character has enough mana to cast spell
+        if so, subtract mana according to listed costs
+        */
+        if (cost<=mana){
+            mana -= cost;
+            System.out.println("This spell leaves " + getName() + " at " + mana + " mana!");
+            return true;
+        }
+        else{
+            System.out.println(getName() + " doesn't have enough mana to cast this spell!");
+            return false;
+        }
+    }
     public void ChromaticOrb(Entity target){
         //Narrates Chromtic Orb casting with a cost of 4 mana
         if (spendMana(4)){

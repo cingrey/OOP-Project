@@ -28,6 +28,24 @@ public class Fighter extends Entity{
         bracing = false;
         fury = false;
     }
+
+    //accessor methods for new attributes
+    public boolean isBracing(){
+        return bracing;
+    }
+    public boolean hasFury(){
+        return fury;
+    }
+
+    //mutator methods for new attributes
+    public void setBracing(boolean bracing){
+        this.bracing = bracing;
+    }
+    public void setFury(boolean fury){
+        this.fury = fury;
+    }
+
+    //Overridden methods
     @Override
     public void takeDMG(int damage){
         //bracing flag allows character to halve next incoming damage and trigger fury flag
@@ -72,6 +90,8 @@ public class Fighter extends Entity{
         setCurrHP(getCurrHP()+newHP);
         System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
+
+    //new methods to implement attack options
     public void swordATK(Entity target){
         /*
         Narrates melee attack with sword
