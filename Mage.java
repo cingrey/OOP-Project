@@ -28,8 +28,10 @@ public class Mage extends Entity{
         mana = MANA_MAX;
     }
     public boolean spendMana(int cost){
-        //checks if character has enough mana to cast spell
-        //if so, subtract mana according to listed costs
+        /*
+        checks if character has enough mana to cast spell
+        if so, subtract mana according to listed costs
+        */
         if (cost<=mana){
             mana -= cost;
             System.out.println("This spell leaves " + getName() + " at " + mana + " mana!");
@@ -46,7 +48,6 @@ public class Mage extends Entity{
         Prompts user to choose from combat options/actions
         Narrates outcome of choice
         */
- 
         Scanner s = new Scanner(System.in);
         System.out.println("What is "+getName()+"'s next move?");
         display_actions();
@@ -72,13 +73,9 @@ public class Mage extends Entity{
     }
     @Override
     public void heal(){
+        //Mage heals back HP based on 6-sided die with a modifier of +1
         int newHP = generic_roll(1,6)+1;
-        if ((getCurrHP()+newHP)<=getMaxHP()){
-            setCurrHP(getMaxHP());
-        }
-        else{
-            setCurrHP(getCurrHP()+newHP);
-        }
+        setCurrHP(getCurrHP()+newHP);
         if ((mana+newHP)<=MANA_MAX){
             mana = MANA_MAX;
         }
@@ -89,13 +86,14 @@ public class Mage extends Entity{
     }
     @Override
     public String toString() {
+        //also print mana amount
         String stats = super.toString();
         stats += "Mana: " + mana + "/" + MANA_MAX + "\n";
         return stats;
     }
 
     public void ChromaticOrb(Entity target){
-        //Narrates elemental orb throw
+        //Narrates Chromtic Orb casting with a cost of 4 mana
         if (spendMana(4)){
             System.out.println(getName() + " launches an orb of chaotic energy!");
             if (check(target.getArmorClass(),6)){
@@ -109,7 +107,10 @@ public class Mage extends Entity{
         }
     }
     public void MagicMissile(Entity target){
-        //Narrates magical homing attack
+        /*
+        Narrates Magic Missile casting with a cost of 4 mana
+        unlike other spells, this always hits target
+        */
         if (spendMana(4)){
             System.out.println(getName() + " shoots 3 magical homing bolts from their fingers!");
             int damage = (generic_roll(1,4)+1)*3;
@@ -118,7 +119,10 @@ public class Mage extends Entity{
         }
     }
     public void Shatter(Entity target){
-        //Narrates explosion attack
+        /*
+        Narrates Shatter casting with a cost of 6 mana
+        instead of missing, this spell will do half damage 
+        */
         if (spendMana(6)){
             System.out.println(getName() + " engulfs the enemy in an explosion!");
             int damage = generic_roll(3,8);
@@ -130,7 +134,10 @@ public class Mage extends Entity{
         }
     }
     public void NecroticGrasp(Entity target){
-        //Narrates necrotic melee attack
+        /*
+        Narrates Necrotic Grasp attack with a cost of 10 mana
+        calls heal() on "hit" to simulate life drain
+        */
         if (spendMana(10)){
             System.out.println(getName() + " envelopes their hands with necrotic energy and reaches out!");
             if (check(target.getArmorClass(),6)){

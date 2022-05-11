@@ -64,17 +64,19 @@ public class Rogue extends Entity{
     }
     @Override
     public void heal(){
+        //Rogue heals back HP based on 8-sided die with a modifier of +2
         int newHP = generic_roll(1,8)+2;
-        if ((getCurrHP()+newHP)<=getMaxHP()){
-            setCurrHP(getMaxHP());
-        }
-        else{
-            setCurrHP(getCurrHP()+newHP);
-        }
+        setCurrHP(getMaxHP()+newHP);
         System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
 
     public void ambush(Entity target){
+        /*
+        Narrates ambush attempt
+        insight provides an additional chance for attack to hit
+        sneak increases amount of damage dealt
+        sets insight and sneak to false
+        */
         System.out.println(getName() + " tries to stab the enemy!");
         boolean advantage = false;
         if (insight){
@@ -98,6 +100,11 @@ public class Rogue extends Entity{
         }
     }
     public void analyze(Entity target){
+        /*
+        Narrates effort to learn about target
+        sets insight to true
+        prints out information on target
+        */
         if (!insight){
             insight = true;
             System.out.println(getName() + " gains insight into the enemy's next few movements!");

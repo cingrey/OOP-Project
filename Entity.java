@@ -54,7 +54,15 @@ public abstract class Entity extends Object{
         this.name = name;
     }
     public void setCurrHP(int currHP){
-        this.currHP = currHP;
+        if (currHP<0){
+            this.currHP = 0;
+        }
+        else if (currHP>maxHP){
+            this.currHP = maxHP;
+        }
+        else{
+            this.currHP = currHP;
+        }
     }
     public void setMaxHP(int maxHP){
         this.maxHP = maxHP;
@@ -77,7 +85,7 @@ public abstract class Entity extends Object{
 
     public int generic_roll(int num, int base){
         /*
-        Rolls num parameter dice, each with sides equal to base parameter; for flexible implementation
+        Rolls num parameter dice, each with sides equal to base parameter; for flexible dice rolling
         Parameters:
         num - (int) number of dice to roll
         base - (int) the number of sides for the simulated dice
@@ -104,6 +112,7 @@ public abstract class Entity extends Object{
         Parameters:
         difficulty - (int) number to meet/beat to succeed in effort
         modifier - (int) represents entity's aptitude for specific effort; flat addition to d20 roll
+        Returns true if roll is less than or equal to difficulty; otherwise, returns false
         */
         return (roll_d20()+modifier) >= difficulty;
     }
@@ -116,9 +125,11 @@ public abstract class Entity extends Object{
     }
 
     public void takeDMG(int damage){
-        //Narrates entity being injured and checks if it is dead
-        //Parameter:
-        //damage - (int) amount of damage to be applied to currHP
+        /*
+        Narrates entity being injured and checks if it is dead
+        Parameter:
+        damage - (int) amount of damage to be applied to currHP
+        */
         System.out.println(name + " takes " + damage + " damage!");
         setCurrHP(currHP-damage);
         System.out.println(name + " has " + currHP + " remaining!");
@@ -129,18 +140,25 @@ public abstract class Entity extends Object{
     }
 
     public abstract void attack(Entity target);
-    //simulates, describes, and resolves an attack between the player and
-    //opposing entity
-    //to be overridden by subclasses per their unique design features
-    //Parameter:
-    //target - (Entity) character/creature attack will deal damage to
+    /*
+    simulates, describes, and resolves an attack between the player and
+    opposing entity
+    to be overridden by subclasses per their unique design features
+    Parameter:
+    target - (Entity) character/creature attack will deal damage to
+    */
 
     public abstract void heal();
-    //represents player's attempt to heal character; should call setCurrHP
-    //should not allow currHP to exceed maxHP
+    /*
+    represents player's attempt to heal character; should call setCurrHP
+    should not allow currHP to exceed maxHP
+    */
 
     @Override
     public String toString(){
+    /*
+    print relevant statistics
+    */
         String stats = "Name: " + name + "\nHP: " + currHP + " / " + maxHP + "\nAC: " + armor_class + "\nAbilities:\n";
         for(int i=0; i<abilities.size();i++){
             stats += abilities.get(i)+"\n";

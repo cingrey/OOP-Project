@@ -37,6 +37,12 @@ public class Troll extends Entity{
     }
     @Override
     public void attack(Entity target){
+        /*
+        Narrates Troll attack
+        if Troll has sufficent HP, it can heal before it attacks
+        chooses attack option randomly
+        if bloodied flag is true, always uses flurry
+        */
         if (getCurrHP()<=getMaxHP() & !bloodied){
             heal();
         }
@@ -55,15 +61,12 @@ public class Troll extends Entity{
     }
     @Override
     public void heal(){
+        //Troll heals flat 10 HP
         System.out.println("Some of the troll's wounds are closing up!");
-        if ((getCurrHP()+10)>=getMaxHP()){
-            setCurrHP(getMaxHP());
-        }
-        else{
-            setCurrHP(getMaxHP()+10);
-        }
+        setCurrHP(getMaxHP()+10);
     }
     public void bite(Entity target, int modifier){
+        //Narrates attempt to bite target
         System.out.println("The troll goes for a bite!");
         if (check(target.getArmorClass(), modifier)){
             System.out.println("It chomps on " + target.getName() + "!");
@@ -75,6 +78,7 @@ public class Troll extends Entity{
         }
     }
     public void claw(Entity target, int modifier){
+        //Narrates attempt to slash target with claws
         System.out.println("The troll swipes with a claw!");
         if (check(target.getArmorClass(), modifier)){
             System.out.println("The claw scrapes " + target.getName() + "!");
@@ -86,6 +90,7 @@ public class Troll extends Entity{
         }
     }
     public void flurry(Entity target){
+        //Narrates series of desperate attacks; more attacks but each is less likely to hit target
         System.out.println("The troll makes wild attacks in its bloodied state!");
         claw(target, 3);
         claw(target, 3);

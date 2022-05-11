@@ -67,18 +67,16 @@ public class Fighter extends Entity{
     }
     @Override
     public void heal(){
+        //Fighter heals back HP based on 10-sided die with a modifier of +3
         int newHP = generic_roll(1,10)+3;
-        if ((getCurrHP()+newHP)<=getMaxHP()){
-            setCurrHP(getMaxHP());
-        }
-        else{
-            setCurrHP(getCurrHP()+newHP);
-        }
+        setCurrHP(getCurrHP()+newHP);
         System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
     public void swordATK(Entity target){
-        //Narrates melee attack with sword
-        //fury will double attack damage;
+        /*
+        Narrates melee attack with sword
+        fury will double attack damage;
+        */
         System.out.println(getName() + " swings their sword!");
         if (check(target.getArmorClass(),7)){
             System.out.println("And lands a solid hit!");
@@ -95,8 +93,10 @@ public class Fighter extends Entity{
         }
     }
     public void crossbowATK(Entity target){
-        //Narrates ranged attack with crossbow
-        //fury will allow immediate second attack
+        /*
+        Narrates ranged attack with crossbow
+        fury will allow immediate second attack
+        */
         System.out.println(getName() + " fires their crossbow!");
         if (check(target.getArmorClass(), 6)){
             int damage = generic_roll(1,10)+2;
