@@ -4,11 +4,14 @@ Author: Team COBOL
 This is the driver class of the game.
 */
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.NumberFormatException;
 
 
-public class Game {
+public class Game extends Object{
     public static void main(String args[]){
         Scanner s = new Scanner(System.in);
 
@@ -17,18 +20,61 @@ public class Game {
         System.out.println("At any point you can type \"q\" to quit.");
         String prompt = "Would you like to [1] play with the default character or [2] create your own: ";
         int choice = getChoice(s, 2, prompt);
-        Entity entity;
+        Entity player;
         if (choice == 1) {
-            entity = new Fighter("Fighter");
+            player = new Fighter("Fighter");
         }
         else{
-            entity = getCustomCharacter(s);
+            player = getCustomCharacter(s);
         }
-        System.out.println(entity);
-        entity.attack(entity);
+        System.out.println(player);
+        // entity.attack(entity);
+
+        String[][] story = getStory("Stories/Default.csv");
+
+        goToLoc(s, 0, player, story); // Start the game
         System.out.println("Thank you for playing!");
         s.close();
     }  
+
+    private static void goToLoc(Scanner s, int locId, Entity player, String[][] story){
+        System.out.println(story[locId][2]); // print exposition
+        int choice = getChoice(s, Integer.parseInt(story[locId][4]), story[locId][3]);
+        goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story);
+    }
+
+    private static String[][] getStory(String file_name){
+        Scanner sc = new Scanner(System.in); // To initialize
+        try{
+            sc = new Scanner(new File(file_name)); 
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Story not found");
+            System.exit(1);
+        }    
+        sc.useDelimiter(",");   //sets the delimiter pattern  
+        sc.next();
+        int num_rows = Integer.parseInt(sc.next());
+        sc.next();
+        int num_cols = Integer.parseInt(sc.next());
+        String[][] story = new String[num_rows][num_cols];
+        
+        for(int x = 0; x < num_cols * 2 - 3; x++){
+            sc.next(); // read empty cells we do not need
+        }
+        for(int x = 0; x < num_rows; x++){
+            for(int y = 0; y < num_cols; y++){
+                try{
+                    story[x][y] = sc.next();  //find and returns the next complete token from this scanner  
+                }
+                catch(NoSuchElementException e){
+                    break; // no more things to read
+                }
+            }
+        }
+        sc.close();  //closes the scanner 
+        return story;
+    }
 
      /*
      * returns custom character
