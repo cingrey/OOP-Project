@@ -39,7 +39,7 @@ public class Game extends Object{
 
     private static void goToLoc(Scanner s, int locId, Entity player, String[][] story){
         System.out.println(story[locId][2]); // print exposition
-        int choice = getChoice(s, Integer.parseInt(story[locId][4]), story[locId][3]);
+        int choice = getChoice(s, Integer.parseInt(story[locId][4]), story[locId][3]); // Print prompt and get selection
         goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story);
     }
 
@@ -53,15 +53,16 @@ public class Game extends Object{
             System.exit(1);
         }    
         sc.useDelimiter(",");   //sets the delimiter pattern  
-        sc.next();
+        sc.next(); // Dont read first cell this is for formatting
         int num_rows = Integer.parseInt(sc.next());
-        sc.next();
+        sc.next(); // Dont read "Array Width cell"
         int num_cols = Integer.parseInt(sc.next());
-        String[][] story = new String[num_rows][num_cols];
+        String[][] story = new String[num_rows][num_cols]; // This will hold an array of all story events
         
         for(int x = 0; x < num_cols * 2 - 3; x++){
             sc.next(); // read empty cells we do not need
         }
+        // Fill in the entire story matrix with the csv sheet
         for(int x = 0; x < num_rows; x++){
             for(int y = 0; y < num_cols; y++){
                 try{
@@ -72,7 +73,7 @@ public class Game extends Object{
                 }
             }
         }
-        sc.close();  //closes the scanner 
+        sc.close();  //closes this csv reading scanner 
         return story;
     }
 
