@@ -28,11 +28,14 @@ public class Game extends Object{
             player = getCustomCharacter(s);
         }
         System.out.println(player);
-        // entity.attack(entity);
 
         String[][] story = getStory("Stories/Default.csv");
 
         goToLoc(s, 0, player, story); // Start the game
+
+        Troll troll = new Troll();//create enemy for eventual combat encounter
+        battle(player,troll);//run combat encounter
+        
         System.out.println("Thank you for playing!");
         s.close();
     }  
@@ -83,17 +86,19 @@ public class Game extends Object{
     private static Entity getCustomCharacter(Scanner s){
         //TODO implement this function in sprint 2
         int choice = getChoice(s, 3, "Would you like to be a [1] Fighter, [2] Mage, [3] Rogue: ");
+        System.out.println("Input the name of your character: ");
+        String name = s.next();
         if (choice == 1){
-            return new Fighter("Fighter");
+            return new Fighter(name);
         }
         if (choice == 2){
-            return new Mage("Mage");
+            return new Mage(name);
         }
-        return new Rogue("Rogue");
+        return new Rogue(name);
     }
 
     /*
-     * returns an integer representing the choice
+     * returns an integer representing a choice
      * the user makes and parses their input
      */
     private static int getChoice(Scanner s, int num_options, String prompt){
@@ -108,6 +113,28 @@ public class Game extends Object{
             }
         }
         return choice;
+    }
+
+    /*
+     * Facilitates battle between player and one other entity
+     * prints a description when either entity's isAlive flag
+     * hits "false"
+    */
+    private static void battle(Entity first, Entity second){
+        System.out.println(first.getName()+" and "+second.getName()+" are now fighting!");
+        System.out.println(first.getName()+" has the initiative!");
+        while (first.getStatus()&&second.getStatus()){
+            first.attack(second);
+            if (second.getStatus()){
+                second.attack(first);
+            }
+        }
+        if (!first.getStatus()){
+            System.out.println(first.getName()+" has fallen!");
+        }
+        if (!second.getStatus()){
+            System.out.println(second.getName()+" has fallen!");
+        }
     }
 
     /*
