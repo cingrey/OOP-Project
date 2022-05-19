@@ -4,7 +4,6 @@ Author: Team COBOL
 This class implements a Mage character for the game.
 */
 import java.util.ArrayList;
-import java.util.Scanner;
  
 public class Mage extends Entity{
     /*
@@ -12,17 +11,17 @@ public class Mage extends Entity{
     mana - (int)
     */
     private int mana;
-    private final int MANA_MAX = 32;
+    private final int MANA_MAX = 73;
     public Mage(String name){
         setName(name);//this.name = name;
-        setMaxHP(37);//maxHP = 37;
+        setMaxHP(62);//maxHP = 62;
         setCurrHP(getMaxHP());//currHP = maxHP
-        setArmorClass(11);//armor_class = 11;
+        setArmorClass(13);//armor_class = 13;
         ArrayList<String> powers = new ArrayList<String>(4);
-        powers.add("Chromatic Orb - Versatile elemental attack; costs 4 mana");
+        powers.add("Chromatic Orb - Versatile elemental attack; costs 5 mana");
         powers.add("Magic Missile - Low damage but guaranteed hit; costs 4 mana");
         powers.add("Shatter - Thunderous burst; costs 6 mana");
-        powers.add("Necrotic Grasp - Hard-to-hit life drain; costs 10 mana");
+        powers.add("Necrotic Grasp - Life drain; costs 10 mana");
         setAbilities(powers);
         setStatus(true);
         mana = MANA_MAX;
@@ -48,20 +47,11 @@ public class Mage extends Entity{
     
     //Overridden methods
     @Override
-    public void attack(Entity target){
+    public void attack(Entity target, int choice){
         /*
         Prompts user to choose from combat options/actions
         Narrates outcome of choice
         */
-        Scanner s = new Scanner(System.in);
-        System.out.println("What is "+getName()+"'s next move?");
-        display_actions();
-        int choice = s.nextInt();
-        while (choice>getAbilities().size()){ //TODO: implement better validating and error handling
-            System.out.println("Improper input. Please choose a numbered option:");
-            display_actions();
-            choice = s.nextInt();
-        }
         if (choice==1){
             ChromaticOrb(target);
         }
@@ -74,7 +64,6 @@ public class Mage extends Entity{
         if (choice==4){
             NecroticGrasp(target);
         }
-        s.close();
     }
     @Override
     public void heal(){
@@ -109,11 +98,11 @@ public class Mage extends Entity{
         }
     }
     public void ChromaticOrb(Entity target){
-        //Narrates Chromtic Orb casting with a cost of 4 mana
-        if (spendMana(4)){
+        //Narrates Chromtic Orb casting with a cost of 5 mana
+        if (spendMana(5)){
             System.out.println(getName() + " launches an orb of chaotic energy!");
-            if (check(target.getArmorClass(),6)){
-                int damage = generic_roll(3,8);
+            if (check(target.getArmorClass(),9)){
+                int damage = generic_roll(6,8);
                 System.out.println("And hits!");
                 target.takeDMG(damage);
             }
@@ -129,7 +118,7 @@ public class Mage extends Entity{
         */
         if (spendMana(4)){
             System.out.println(getName() + " shoots 3 magical homing bolts from their fingers!");
-            int damage = (generic_roll(1,4)+1)*3;
+            int damage = (generic_roll(1,4)+1)*5;
             System.out.println("They dig into the target!");
             target.takeDMG(damage);
         }
@@ -141,7 +130,7 @@ public class Mage extends Entity{
         */
         if (spendMana(6)){
             System.out.println(getName() + " engulfs the enemy in an explosion!");
-            int damage = generic_roll(3,8);
+            int damage = generic_roll(5,8);
             if (!(check(target.getArmorClass(),6))){
                 System.out.println("The enemy used cover to mitigate the damage!");
                 damage /= 2;
@@ -156,7 +145,7 @@ public class Mage extends Entity{
         */
         if (spendMana(10)){
             System.out.println(getName() + " envelopes their hands with necrotic energy and reaches out!");
-            if (check(target.getArmorClass(),6)){
+            if (check(target.getArmorClass(),9)){
                 int damage = target.getCurrHP()/2;
                 System.out.println("And touches, draining the target's vitality!");
                 target.takeDMG(damage);

@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.NumberFormatException;
+import java.util.Random;
 
 
 public class Game extends Object{
@@ -27,14 +28,13 @@ public class Game extends Object{
         else{
             player = getCustomCharacter(s);
         }
-        System.out.println(player);
+        //System.out.println(player);
 
-        String[][] story = getStory("Stories/Default.csv");
+        //String[][] story = getStory("Stories/Default.csv");
 
-        goToLoc(s, 0, player, story); // Start the game
-
+        //goToLoc(s, 0, player, story); // Start the game
         Troll troll = new Troll();//create enemy for eventual combat encounter
-        battle(player,troll);//run combat encounter
+        battle(player,troll,s);//run combat encounter
         
         System.out.println("Thank you for playing!");
         s.close();
@@ -120,13 +120,14 @@ public class Game extends Object{
      * prints a description when either entity's isAlive flag
      * hits "false"
     */
-    private static void battle(Entity first, Entity second){
+    private static void battle(Entity first, Entity second, Scanner s){
         System.out.println(first.getName()+" and "+second.getName()+" are now fighting!");
-        System.out.println(first.getName()+" has the initiative!");
+        Random enemyChoice = new Random();
         while (first.getStatus()&&second.getStatus()){
-            first.attack(second);
+            first.display_actions();
+            first.attack(second, getChoice(s, first.getAbilities().size(), "What's "+first.getName()+"'s next move? "));
             if (second.getStatus()){
-                second.attack(first);
+                second.attack(first, enemyChoice.nextInt(2));
             }
         }
         if (!first.getStatus()){

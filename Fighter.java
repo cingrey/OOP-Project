@@ -4,7 +4,6 @@ Author: Team COBOL
 This class implements a Fighter character for the game.
 */
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Fighter extends Entity{
     /*
@@ -16,9 +15,9 @@ public class Fighter extends Entity{
     private boolean fury;
     public Fighter(String name){
         setName(name);//this.name = name;
-        setMaxHP(58);//maxHP = 58;
+        setMaxHP(112);//maxHP = 112;
         setCurrHP(getMaxHP());//currHP = maxHP;
-        setArmorClass(17);//armor_class = 17;
+        setArmorClass(19);//armor_class = 19;
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("Sword - basic melee strike; empowered by fury");
         powers.add("Crossbow - basic ranged attack");
@@ -58,20 +57,10 @@ public class Fighter extends Entity{
         super.takeDMG(damage);
     }
     @Override
-    public void attack(Entity target){
+    public void attack(Entity target, int choice){
         /*
-        Prompts user to choose from combat options/actions
         Narrates outcome of choice
         */
-        Scanner s = new Scanner(System.in);
-        System.out.println("What is "+getName()+"'s next move?");
-        display_actions();
-        int choice = s.nextInt();
-        while (choice>getAbilities().size()){ //TODO: implement better validating and error handling
-            System.out.println("Improper input. Please choose a numbered option:");
-            display_actions();
-            choice = s.nextInt();
-        }
         if (choice==1){
             swordATK(target);
         }
@@ -81,14 +70,13 @@ public class Fighter extends Entity{
         if (choice==3){
             brace();
         }
-        s.close();
     }
     @Override
     public void heal(){
         //Fighter heals back HP based on 10-sided die with a modifier of +3
         int newHP = generic_roll(1,10)+3;
         setCurrHP(getCurrHP()+newHP);
-        System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
+        System.out.println(getName() + " draws upon willpower and recovers " + newHP + " hit points.");
     }
 
     //new methods to implement attack options
@@ -98,12 +86,12 @@ public class Fighter extends Entity{
         fury will double attack damage;
         */
         System.out.println(getName() + " swings their sword!");
-        if (check(target.getArmorClass(),7)){
+        if (check(target.getArmorClass(),8)){
             System.out.println("And lands a solid hit!");
-            int damage = generic_roll(1,8)+3;
+            int damage = generic_roll(1,10)+4;
             if(fury){
                 System.out.println("Fury empowers the attack!");
-                damage *= 2;
+                damage *= 3;
                 fury = false;
             }
             target.takeDMG(damage);
@@ -119,7 +107,7 @@ public class Fighter extends Entity{
         */
         System.out.println(getName() + " fires their crossbow!");
         if (check(target.getArmorClass(), 6)){
-            int damage = generic_roll(1,10)+2;
+            int damage = generic_roll(2,8)+2;
             System.out.println("And lands a solid hit!");
             target.takeDMG(damage);
         }
@@ -127,16 +115,19 @@ public class Fighter extends Entity{
             System.out.println("But misses!");
         }
         if (fury){
-            System.out.println("Furious volley!");
+            System.out.println("Furious volley! (2 more shots!)");
             fury = false;
             crossbowATK(target);
+            crossbowATK(target);
+
         }
     }
     public void brace(){
         //set bracing to true if it is false
         if (!bracing){
             bracing = true;
-            System.out.println(getName() + " braces for the next attack!"); 
+            System.out.println(getName() + " braces for the next attack!");
+            heal(); 
         }
         else{
             System.out.println("Oops! " + getName() + " is already bracing!");

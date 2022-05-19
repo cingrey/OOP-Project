@@ -4,7 +4,6 @@ Author: Team COBOL
 This class implements a Rogue character for the game.
 */
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Rogue extends Entity{
     /*
@@ -16,9 +15,9 @@ public class Rogue extends Entity{
     private boolean insight;
     public Rogue(String name){
         setName(name);
-        setMaxHP(45);
+        setMaxHP(87);
         setCurrHP(getMaxHP());
-        setArmorClass(14);
+        setArmorClass(17);
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("Ambush - calculated attack; more damage if hidden");
         powers.add("Analyze - gain insight into target; makes next attack more likely to hit");
@@ -50,25 +49,19 @@ public class Rogue extends Entity{
     public void takeDMG(int damage){
         super.takeDMG(damage);
         if (sneak && getStatus()){
-            setArmorClass(14);
+            setArmorClass(17);
             System.out.println(getName() + " got knocked out of cover!");
+            sneak = false;
+            insight = false;
+            System.out.println("*Stealth and Insight have worn off*");
         }
     }
     @Override
-    public void attack(Entity target){
+    public void attack(Entity target, int choice){
         /*
         Prompts user to choose from combat options/actions
         Narrates outcome of choice
         */
-        Scanner s = new Scanner(System.in);
-        System.out.println("What is "+getName()+"'s next move?");
-        display_actions();
-        int choice = s.nextInt();
-        while (choice>getAbilities().size()){ //TODO: implement better validating and error handling
-            System.out.println("Improper input. Please choose a numbered option:");
-            display_actions();
-            choice = s.nextInt();
-        }
         if (choice==1){
             ambush(target);
         }
@@ -78,7 +71,6 @@ public class Rogue extends Entity{
         if (choice==3){
             hide();
         }
-        s.close();
     }
     @Override
     public void heal(){
@@ -100,17 +92,14 @@ public class Rogue extends Entity{
         boolean advantage = false;
         if (insight){
             System.out.println("Attacking a weak point!");
-            advantage = check(target.getArmorClass(), 6);
+            advantage = check(target.getArmorClass(), 9);
         }
-        if (check(target.getArmorClass(), 6) || advantage){
+        if (check(target.getArmorClass(), 9) || advantage){
             System.out.println("Successful strike!");
-            int damage = generic_roll(1,6)+3;
+            int damage = generic_roll(1,6)+5;
             if (sneak){
                 System.out.println("Critical hit!");
-                damage += generic_roll(4,6);
-                sneak = false;
-                insight = false;
-                System.out.println("*Stealth and Insight have worn off*");
+                damage += generic_roll(6,6);
             }
             target.takeDMG(damage);
         }
@@ -138,7 +127,7 @@ public class Rogue extends Entity{
         //sets sneak to true
         if (!sneak){
             sneak = true;
-            setArmorClass(16);
+            setArmorClass(22);
             System.out.println(getName() + " takes cover!");
         }
         else{

@@ -41,29 +41,32 @@ public class Troll extends Entity{
     @Override
     public void takeDMG(int damage){
         //if currHP falls below half maxHP, trigger bloodied flag
-        super.takeDMG(damage);
-        if (getStatus() && getCurrHP()<=(getMaxHP()/2)){
+        System.out.println("The troll takes " + damage + " damage!");
+        setCurrHP(getCurrHP()-damage);
+        if (getCurrHP()==0){
+            setStatus(false);
+        }
+        if (getStatus() && getCurrHP()<=(getMaxHP()/2) && !bloodied){
             bloodied = true;
             System.out.println("It's wounds are no longer healing!\nBut it's now rampaging!");
         }
     }
     @Override
-    public void attack(Entity target){
+    public void attack(Entity target, int choice){
         /*
         Narrates Troll attack
         if Troll has sufficent HP, it can heal before it attacks
         chooses attack option randomly
         if bloodied flag is true, always uses flurry
         */
-        if (getCurrHP()<=getMaxHP() & !bloodied){
+        if (getCurrHP()<getMaxHP() & !bloodied){
             heal();
         }
         if (!bloodied){
-            int attack = generic_roll(1,2);
-            if (attack==0){
+            if (choice==0){
                 bite(target, 7);
             }
-            if (attack==1){
+            if (choice==1){
                 claw(target, 7);
             }
         }
@@ -75,7 +78,7 @@ public class Troll extends Entity{
     public void heal(){
         //Troll heals flat 10 HP
         System.out.println("Some of the troll's wounds are closing up!");
-        setCurrHP(getMaxHP()+10);
+        setCurrHP(getCurrHP()+10);
         if (getCurrHP()>=(getMaxHP()/2)){
             bloodied = false;
         }
@@ -109,8 +112,8 @@ public class Troll extends Entity{
     public void flurry(Entity target){
         //Narrates series of desperate attacks; more attacks but each is less likely to hit target
         System.out.println("The troll makes wild attacks in its bloodied state!");
-        claw(target, 3);
-        claw(target, 3);
-        bite(target, 3);
+        claw(target, 4);
+        claw(target, 4);
+        bite(target, 4);
     }
 }

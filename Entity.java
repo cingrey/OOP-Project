@@ -132,20 +132,20 @@ public abstract class Entity extends Object{
         */
         System.out.println(name + " takes " + damage + " damage!");
         setCurrHP(currHP-damage);
-        System.out.println(name + " has " + currHP + " remaining!");
-        if (currHP<0){
+        System.out.println(name + " has " + currHP + " HP remaining!");
+        if (currHP==0){
             isAlive = false;
-            //System.out.println(name + " is dead!");
         }
     }
 
-    public abstract void attack(Entity target);
+    public abstract void attack(Entity target, int choice);
     /*
     simulates, describes, and resolves an attack between the player and
     opposing entity
     to be overridden by subclasses per their unique design features
-    Parameter:
+    Parameters:
     target - (Entity) character/creature attack will deal damage to
+    choice - (int) represents specific character ability to be executed
     */
 
     public abstract void heal();
