@@ -7,8 +7,6 @@ This is the driver class of the game.
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import javax.lang.model.util.ElementScanner6;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.NumberFormatException;
@@ -119,11 +117,17 @@ public class Game extends Object{
         int choice = 0;
         while(!(1 <= choice && choice <= num_options)){
             System.out.print(prompt);
+            String input = s.nextLine();
             try{
-                choice = Integer.parseInt(s.nextLine());
+                choice = Integer.parseInt(input);
             }
             catch(NumberFormatException e){
-                ask_quit(s);
+                if (input.equals("q")){
+                    ask_quit(s);
+                }
+                else{
+                    System.out.println("Invalid input");
+                }
             }
         }
         return choice;
