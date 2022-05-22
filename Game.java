@@ -6,6 +6,9 @@ This is the driver class of the game.
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import javax.lang.model.util.ElementScanner6;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.NumberFormatException;
@@ -22,28 +25,40 @@ public class Game extends Object{
         String prompt = "Would you like to [1] play with the default character or [2] create your own: ";
         int choice = getChoice(s, 2, prompt);
         Entity player;
+        Random rand = new Random();
         if (choice == 1) {
             player = new Fighter("Fighter");
         }
         else{
             player = getCustomCharacter(s);
         }
-        //System.out.println(player);
+        System.out.println(player);
 
-        //String[][] story = getStory("Stories/Default.csv");
+        String[][] story = getStory("Stories/Default.csv");
 
-        //goToLoc(s, 0, player, story); // Start the game
+        goToLoc(s, 0, player, story, rand); // Start the game
         Troll troll = new Troll();//create enemy for eventual combat encounter
-        battle(player,troll,s);//run combat encounter
+        battle(player,troll,s, rand);//run combat encounter
         
         System.out.println("Thank you for playing!");
         s.close();
     }  
 
-    private static void goToLoc(Scanner s, int locId, Entity player, String[][] story){
+    private static void goToLoc(Scanner s, int locId, Entity player, String[][] story, Random rand){
         System.out.println(story[locId][2]); // print exposition
-        int choice = getChoice(s, Integer.parseInt(story[locId][4]), story[locId][3]); // Print prompt and get selection
-        goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story);
+        int locType = 0;
+        int choice;
+        locType = Integer.parseInt(story[locId][1]);
+        if (locType == 0){
+            choice = getChoice(s, Integer.parseInt(story[locId][4]), story[locId][3]); // Print prompt and get selection
+        }
+        else if (locType == 2){
+            choice = rand.nextInt(Integer.parseInt(story[locId][4])) + 1;
+        }
+        else{ // is of type one which means go to final boss
+            return;
+        }
+        goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story, rand);
     }
 
     private static String[][] getStory(String file_name){
@@ -84,10 +99,9 @@ public class Game extends Object{
      * returns custom character
      */
     private static Entity getCustomCharacter(Scanner s){
-        //TODO implement this function in sprint 2
         int choice = getChoice(s, 3, "Would you like to be a [1] Fighter, [2] Mage, [3] Rogue: ");
         System.out.println("Input the name of your character: ");
-        String name = s.next();
+        String name = s.nextLine();
         if (choice == 1){
             return new Fighter(name);
         }
@@ -119,10 +133,11 @@ public class Game extends Object{
      * Facilitates battle between player and one other entity
      * prints a description when either entity's isAlive flag
      * hits "false"
+     * The first entity is the player and the second player is the enemy
     */
-    private static void battle(Entity first, Entity second, Scanner s){
+    private static void battle(Entity first, Entity second, Scanner s, Random rand){
         System.out.println(first.getName()+" and "+second.getName()+" are now fighting!");
-        Random enemyChoice = new Random();
+        Random enemyChoice = rand;
         while (first.getStatus()&&second.getStatus()){
             first.display_actions();
             first.attack(second, getChoice(s, first.getAbilities().size(), "What's "+first.getName()+"'s next move? "));

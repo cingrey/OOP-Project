@@ -1,5 +1,13 @@
 # OOP-Project
+To play this game you can compile all of the java files and run the Game.class file.
 
+To do this first navigate to this directory in your terminal.
+Then type "javac *.java"
+then type "java Game"
+You should be prompted with the start of the game.
+
+You can also make your own stories by creating a csv file.
+Right now you will always play the default story that we have created.
 
 Link for Product Backlog:
 https://docs.google.com/spreadsheets/d/1FCgnKFNr-zJqNY-mPC3XypijnjqKXXHJrIMSpecbNUI/edit?usp=sharing
