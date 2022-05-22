@@ -101,6 +101,9 @@ public class Rogue extends Entity{
                 print_sleep("Critical hit!");
                 damage += generic_roll(6,6);
             }
+            if (getName().equalsIgnoreCase("Tony")){
+                damage = 999; // Tony easter egg
+            }
             target.takeDMG(damage);
         }
         else{
