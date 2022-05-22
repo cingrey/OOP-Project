@@ -118,7 +118,8 @@ public abstract class Entity extends Object{
     }
     public void display_actions(){
         //Prints brief descriptions for each of the entity's combat abilities
-        System.out.println("Actions:");
+        
+        System.out.println("\nActions:");
         for(int i=0; i<abilities.size();i++){
             System.out.println(abilities.get(i));
         }
@@ -165,4 +166,15 @@ public abstract class Entity extends Object{
         }
         return stats;
     }
+    public void print_sleep(String message){
+        System.out.println(message);
+        try{
+            
+            Thread.sleep(500);
+        }
+        catch(InterruptedException e){
+            System.out.println(e);
+            System.exit(1);
+        }
+   }
 }

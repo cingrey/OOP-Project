@@ -34,7 +34,7 @@ public class Game extends Object{
 
         String[][] story = getStory("Stories/Default.csv");
 
-        goToLoc(s, 0, player, story, rand); // Start the game
+        boolean advantage = goToLoc(s, 0, player, story, rand); // Start the game
         Troll troll = new Troll();//create enemy for eventual combat encounter
         battle(player,troll,s, rand);//run combat encounter
         
@@ -42,7 +42,12 @@ public class Game extends Object{
         s.close();
     }  
 
-    private static void goToLoc(Scanner s, int locId, Entity player, String[][] story, Random rand){
+    /* 
+     * The story happens in this function as it recursively calls itself
+     * Returns 0 if the enemy will get to attack first
+     * Returns 1 if the player can attack first
+    */
+    private static boolean goToLoc(Scanner s, int locId, Entity player, String[][] story, Random rand){
         System.out.println(story[locId][2]); // print exposition
         int locType = 0;
         int choice;
@@ -54,9 +59,10 @@ public class Game extends Object{
             choice = rand.nextInt(Integer.parseInt(story[locId][4])) + 1;
         }
         else{ // is of type one which means go to final boss
-            return;
+            return story[locId][3].equals("Attack First");
         }
-        goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story, rand);
+        System.out.println();
+        return goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story, rand);
     }
 
     private static String[][] getStory(String file_name){
@@ -83,6 +89,7 @@ public class Game extends Object{
             for(int y = 0; y < num_cols; y++){
                 try{
                     story[x][y] = sc.next();  //find and returns the next complete token from this scanner  
+                    story[x][y] = story[x][y].replaceAll("^\"|\"$", "");
                 }
                 catch(NoSuchElementException e){
                     break; // no more things to read
@@ -116,7 +123,7 @@ public class Game extends Object{
     private static int getChoice(Scanner s, int num_options, String prompt){
         int choice = 0;
         while(!(1 <= choice && choice <= num_options)){
-            System.out.print(prompt);
+            System.out.print("\n" + prompt);
             String input = s.nextLine();
             try{
                 choice = Integer.parseInt(input);
@@ -142,9 +149,12 @@ public class Game extends Object{
     private static void battle(Entity first, Entity second, Scanner s, Random rand){
         System.out.println(first.getName()+" and "+second.getName()+" are now fighting!");
         Random enemyChoice = rand;
+        int choice = 0;
         while (first.getStatus()&&second.getStatus()){
             first.display_actions();
-            first.attack(second, getChoice(s, first.getAbilities().size(), "What's "+first.getName()+"'s next move? "));
+            choice = getChoice(s, first.getAbilities().size(), "What's "+first.getName()+"'s next move? ");
+            System.out.println();
+            first.attack(second, choice);
             if (second.getStatus()){
                 second.attack(first, enemyChoice.nextInt(2));
             }

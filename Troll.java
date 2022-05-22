@@ -41,14 +41,14 @@ public class Troll extends Entity{
     @Override
     public void takeDMG(int damage){
         //if currHP falls below half maxHP, trigger bloodied flag
-        System.out.println("The troll takes " + damage + " damage!");
+        print_sleep("The troll takes " + damage + " damage!");
         setCurrHP(getCurrHP()-damage);
         if (getCurrHP()==0){
             setStatus(false);
         }
         if (getStatus() && getCurrHP()<=(getMaxHP()/2) && !bloodied){
             bloodied = true;
-            System.out.println("It's wounds are no longer healing!\nBut it's now rampaging!");
+            print_sleep("It's wounds are no longer healing!\nBut it's now rampaging!");
         }
     }
     @Override
@@ -77,7 +77,7 @@ public class Troll extends Entity{
     @Override
     public void heal(){
         //Troll heals flat 10 HP
-        System.out.println("Some of the troll's wounds are closing up!");
+        print_sleep("Some of the troll's wounds are closing up!");
         setCurrHP(getCurrHP()+10);
         if (getCurrHP()>=(getMaxHP()/2)){
             bloodied = false;
@@ -87,31 +87,31 @@ public class Troll extends Entity{
     //new methods to implement attack options
     public void bite(Entity target, int modifier){
         //Narrates attempt to bite target
-        System.out.println("The troll goes for a bite!");
+        print_sleep("The troll goes for a bite!");
         if (check(target.getArmorClass(), modifier)){
-            System.out.println("It chomps on " + target.getName() + "!");
+            print_sleep("It chomps on " + target.getName() + "!");
             int damage = generic_roll(1, 6)+4;
             target.takeDMG(damage);
         }
         else{
-            System.out.println("And misses!");
+            print_sleep("And misses!");
         }
     }
     public void claw(Entity target, int modifier){
         //Narrates attempt to slash target with claws
-        System.out.println("The troll swipes with a claw!");
+        print_sleep("The troll swipes with a claw!");
         if (check(target.getArmorClass(), modifier)){
-            System.out.println("The claw scrapes " + target.getName() + "!");
+            print_sleep("The claw scrapes " + target.getName() + "!");
             int damage = generic_roll(2,6)+4;
             target.takeDMG(damage);
         }
         else{
-            System.out.println("But misses!");
+            print_sleep("But misses!");
         }
     }
     public void flurry(Entity target){
         //Narrates series of desperate attacks; more attacks but each is less likely to hit target
-        System.out.println("The troll makes wild attacks in its bloodied state!");
+        print_sleep("The troll makes wild attacks in its bloodied state!");
         claw(target, 4);
         claw(target, 4);
         bite(target, 4);

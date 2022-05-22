@@ -11,7 +11,7 @@ public class Mage extends Entity{
     mana - (int)
     */
     private int mana;
-    private final int MANA_MAX = 73;
+    private final int MANA_MAX = 50;
     public Mage(String name){
         setName(name);//this.name = name;
         setMaxHP(62);//maxHP = 62;
@@ -71,7 +71,7 @@ public class Mage extends Entity{
         int newHP = generic_roll(1,6)+1;
         setCurrHP(getCurrHP()+newHP);
         setMana(mana+newHP);
-        System.out.println(getName() + " channels free mana to recover " + newHP + "hit points and mana!");
+        print_sleep(getName() + " channels free mana to recover " + newHP + " hit points and mana!");
     }
     @Override
     public String toString() {
@@ -89,25 +89,25 @@ public class Mage extends Entity{
         */
         if (cost<=mana){
             mana -= cost;
-            System.out.println("This spell leaves " + getName() + " at " + mana + " mana!");
+            print_sleep("This spell leaves " + getName() + " at " + mana + " mana!");
             return true;
         }
         else{
-            System.out.println(getName() + " doesn't have enough mana to cast this spell!");
+            print_sleep(getName() + " doesn't have enough mana to cast this spell!");
             return false;
         }
     }
     public void ChromaticOrb(Entity target){
         //Narrates Chromtic Orb casting with a cost of 5 mana
         if (spendMana(5)){
-            System.out.println(getName() + " launches an orb of chaotic energy!");
+            print_sleep(getName() + " launches an orb of chaotic energy!");
             if (check(target.getArmorClass(),9)){
                 int damage = generic_roll(6,8);
-                System.out.println("And hits!");
+                print_sleep("And hits!");
                 target.takeDMG(damage);
             }
             else{
-                System.out.println("But it misses its target!");
+                print_sleep("But it misses its target!");
             }
         }
     }
@@ -117,9 +117,9 @@ public class Mage extends Entity{
         unlike other spells, this always hits target
         */
         if (spendMana(4)){
-            System.out.println(getName() + " shoots 3 magical homing bolts from their fingers!");
+            print_sleep(getName() + " shoots 3 magical homing bolts from their fingers!");
             int damage = (generic_roll(1,4)+1)*5;
-            System.out.println("They dig into the target!");
+            print_sleep("They dig into the target!");
             target.takeDMG(damage);
         }
     }
@@ -129,10 +129,10 @@ public class Mage extends Entity{
         instead of missing, this spell will do half damage 
         */
         if (spendMana(6)){
-            System.out.println(getName() + " engulfs the enemy in an explosion!");
+            print_sleep(getName() + " engulfs the enemy in an explosion!");
             int damage = generic_roll(5,8);
             if (!(check(target.getArmorClass(),6))){
-                System.out.println("The enemy used cover to mitigate the damage!");
+                print_sleep("The enemy used cover to mitigate the damage!");
                 damage /= 2;
             }
             target.takeDMG(damage);
@@ -144,15 +144,15 @@ public class Mage extends Entity{
         calls heal() on "hit" to simulate life drain
         */
         if (spendMana(10)){
-            System.out.println(getName() + " envelopes their hands with necrotic energy and reaches out!");
+            print_sleep(getName() + " envelopes their hands with necrotic energy and reaches out!");
             if (check(target.getArmorClass(),9)){
                 int damage = target.getCurrHP()/2;
-                System.out.println("And touches, draining the target's vitality!");
+                print_sleep("And touches, draining the target's vitality!");
                 target.takeDMG(damage);
                 heal();
             }
             else{
-                System.out.println("But they miss!");
+                print_sleep("But they miss!");
             }
         }
     }

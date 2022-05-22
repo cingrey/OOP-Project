@@ -50,10 +50,10 @@ public class Rogue extends Entity{
         super.takeDMG(damage);
         if (sneak && getStatus()){
             setArmorClass(17);
-            System.out.println(getName() + " got knocked out of cover!");
+            print_sleep(getName() + " got knocked out of cover!");
             sneak = false;
             insight = false;
-            System.out.println("*Stealth and Insight have worn off*");
+            print_sleep("*Stealth and Insight have worn off*");
         }
     }
     @Override
@@ -77,7 +77,7 @@ public class Rogue extends Entity{
         //Rogue heals back HP based on 8-sided die with a modifier of +2
         int newHP = generic_roll(1,8)+2;
         setCurrHP(getMaxHP()+newHP);
-        System.out.println(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
+        print_sleep(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
 
     //new methods to implement attack options
@@ -88,23 +88,23 @@ public class Rogue extends Entity{
         sneak increases amount of damage dealt
         sets insight and sneak to false
         */
-        System.out.println(getName() + " tries to stab the enemy!");
+        print_sleep(getName() + " tries to stab the enemy!");
         boolean advantage = false;
         if (insight){
-            System.out.println("Attacking a weak point!");
+            print_sleep("Attacking a weak point!");
             advantage = check(target.getArmorClass(), 9);
         }
         if (check(target.getArmorClass(), 9) || advantage){
-            System.out.println("Successful strike!");
+            print_sleep("Successful strike!");
             int damage = generic_roll(1,6)+5;
             if (sneak){
-                System.out.println("Critical hit!");
+                print_sleep("Critical hit!");
                 damage += generic_roll(6,6);
             }
             target.takeDMG(damage);
         }
         else{
-            System.out.println("But it's a miss!");
+            print_sleep("But it's a miss!");
         }
     }
     public void analyze(Entity target){
@@ -115,12 +115,12 @@ public class Rogue extends Entity{
         */
         if (!insight){
             insight = true;
-            System.out.println(getName() + " gains insight into the enemy's next few movements!");
-            System.out.println(target);
+            print_sleep(getName() + " gains insight into the enemy's next few movements!");
+            print_sleep(target.toString());
         }
         else{
-            System.out.println(getName() + " already has an opening.");
-            System.out.println(target);
+            print_sleep(getName() + " already has an opening.");
+            print_sleep(target.toString());
         }
     }
     public void hide(){
@@ -128,10 +128,10 @@ public class Rogue extends Entity{
         if (!sneak){
             sneak = true;
             setArmorClass(22);
-            System.out.println(getName() + " takes cover!");
+            print_sleep(getName() + " takes cover!");
         }
         else{
-            System.out.println(getName() + " is already hiding!");
+            print_sleep(getName() + " is already hiding!");
         }
     }
 }
