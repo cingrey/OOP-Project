@@ -19,9 +19,9 @@ public class Rogue extends Entity{
         setCurrHP(getMaxHP());
         setArmorClass(17);
         ArrayList<String> powers = new ArrayList<String>(3);
-        powers.add("Ambush - calculated attack; more damage if hidden");
-        powers.add("Analyze - gain insight into target; makes next attack more likely to hit");
-        powers.add("Hide - become harder for target to hit; engages sneak status");
+        powers.add("[1] Ambush - calculated attack; more damage if hidden");
+        powers.add("[2] Analyze - gain insight into target; makes next attack more likely to hit");
+        powers.add("[3] Hide - become harder for target to hit; engages sneak status");
         setAbilities(powers);
         setStatus(true);
         sneak = false;

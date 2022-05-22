@@ -18,10 +18,10 @@ public class Mage extends Entity{
         setCurrHP(getMaxHP());//currHP = maxHP
         setArmorClass(13);//armor_class = 13;
         ArrayList<String> powers = new ArrayList<String>(4);
-        powers.add("Chromatic Orb - Versatile elemental attack; costs 5 mana");
-        powers.add("Magic Missile - Low damage but guaranteed hit; costs 4 mana");
-        powers.add("Shatter - Thunderous burst; costs 6 mana");
-        powers.add("Necrotic Grasp - Life drain; costs 10 mana");
+        powers.add("[1] Chromatic Orb - Versatile elemental attack; costs 5 mana");
+        powers.add("[2] Magic Missile - Low damage but guaranteed hit; costs 4 mana");
+        powers.add("[3] Shatter - Thunderous burst; costs 6 mana");
+        powers.add("[4] Necrotic Grasp - Life drain; costs 10 mana");
         setAbilities(powers);
         setStatus(true);
         mana = MANA_MAX;
