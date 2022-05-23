@@ -102,7 +102,7 @@ public class Rogue extends Entity{
                 damage += generic_roll(6,6);
             }
             if (getName().equalsIgnoreCase("Tony")){
-                damage = 999; // Tony easter egg
+                damage = 999; // Easter egg: "Tony" was our common name when testing our game. As a seasoned rogue, Tony's sneak attacks are especially deadly.
             }
             target.takeDMG(damage);
         }

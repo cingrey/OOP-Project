@@ -36,6 +36,9 @@ public class Game extends Object{
 
         boolean advantage = goToLoc(s, 0, player, story, rand); // Start the game
         Troll troll = new Troll();//create enemy for eventual combat encounter
+        if (!advantage){
+            troll.attack(player,1); //if player makes decisions that let the troll surprise them, the troll gets one free attack.
+        }
         battle(player,troll,s, rand);//run combat encounter
         
         System.out.println("Thank you for playing!");
@@ -56,13 +59,13 @@ public class Game extends Object{
             choice = getChoice(s, Integer.parseInt(story[locId][4]), story[locId][3]); // Print prompt and get selection
         }
         else if (locType == 2){
-            choice = rand.nextInt(Integer.parseInt(story[locId][4])) + 1;
+            choice = rand.nextInt(Integer.parseInt(story[locId][4])) + 1; // For some events, the player does not get a choice for where to progress
         }
         else{ // is of type one which means go to final boss
             return story[locId][3].equals("Attack First");
         }
         System.out.println();
-        return goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story, rand);
+        return goToLoc(s, Integer.parseInt(story[locId][choice+4]), player, story, rand);//Go to next event according to values provided in csv
     }
 
     private static String[][] getStory(String file_name){
@@ -142,9 +145,13 @@ public class Game extends Object{
 
     /*
      * Facilitates battle between player and one other entity
-     * prints a description when either entity's isAlive flag
-     * hits "false"
+     * prints a description when either entity's isAlive flag hits "false"
      * The first entity is the player and the second player is the enemy
+     * Parameters:
+     * first - (Entity) the player's Character
+     * second - (Entity) the enemy, which is the troll for this build/version
+     * s - (Scanner) pass in scanner to accept input from user
+     * rand - (Random) allows enemy (second) to randomly choose moves
     */
     private static void battle(Entity first, Entity second, Scanner s, Random rand){
         System.out.println(first.getName()+" and "+second.getName()+" are now fighting!");
@@ -160,10 +167,10 @@ public class Game extends Object{
             }
         }
         if (!first.getStatus()){
-            System.out.println(first.getName()+" has fallen!");
+            System.out.println(first.getName()+" has fallen!\nPerhaps someone else can relieve Brimingston of its troubles?");
         }
         if (!second.getStatus()){
-            System.out.println(second.getName()+" has fallen!");
+            System.out.println(second.getName()+" has fallen!\nBrimingston will remember "+first.getName()+"'s heroic deed!");
         }
     }
 

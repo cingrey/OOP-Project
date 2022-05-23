@@ -1,25 +1,32 @@
 Array Length,11,Array Width,8,,,,,
 Location ID,Location,Location Type,Exposition,Prompt,Num Choices,Choice 1 loc,Choice 2,Blank Column
-0,Start,0,You find yourself in somewhere there is a forest nearby and a village,Would You like to [1] Explore forest or [2] Visit village: ,2,1,2,
-1,Forest,0,"You enter the forest you notice gashes in the trees
-A clear sign that there was an attack
-You notice tracks off to the side
-You also notice a creek that is emitting a magical aura",Would you like to [1] Follow the tracks [2] Follow a stream off to the side: ,2,3,6,
-2,Village,0,"You enter the village and notice people scraping by with lower supplies
-It appears they have not received new supplies in weeks",Would you like to [1] ask the mayor for guidance [2] talk to villagers: ,2,9,10,
+0,Start,0,"You have heard rumors of a monster terrorizing the small village of Brimingston.
+It's your calling as an adventurer to hunt these creatures (and claim any possible reward).",Would You like to [1] Explore forest or [2] Visit Brimingston: ,2,1,2,
+1,Forest,0,"You enter the forest and notice gashes in the trees and
+broken traveling equipment: A clear sign that there was an attack.
+You notice large footprints leading deeper into the forest
+and sense a mild but noticeable magical aura.",Would you like to [1] Follow the tracks [2] Find the magic's source: ,2,3,6,
+2,Village,0,"You enter Brimingston and notice people scraping by with lower supplies.
+It appears they have not received new supplies in weeks.",Would you like to [1] ask the mayor for guidance [2] talk to villagers: ,2,9,10,
 3,Tracks/Cave,0,"You follow the tracks and happen upon a cave
 Outside of the cave you notice signs of the missing supplies",Would you like to [1] Venture in [2] Hide and wait: ,2,4,5,
-4,Venturing into Cave,1,"You venture into the cave and almost bump into a Troll
-He notices your presence and charges towards you",Attack Last,1,N/A,,
-5,Hide and Wait,1,"You wait to see what could be the cause of this carnage
-After some time you notice the outline of what appears to be a troll",Attack First,1,N/A,,
-6,Residual Magic,0,"You follow the aura down to magical pond
-You hear faint humming coming from the pond",Would you like to [1] Drink water [2] Follow creek:,2,7,8,
-7,Drink Water,2,"You kneel down and take a sip from the pond
-The water is very refreshing. You feel a new burst of energy to continue your journey",You continue to follow the creek,1,8,,
-8,Follow Creek,0,"You come upon a dark entrance to an ominous cave
-There are destroyed supplies strung out all over the outside of the cave",Would you like to [1] Venture in [2] Hide in the nearby bushes and wait:,2,4,5,
-9,Mayor's house,0,"You arrive at the Mayor's house and ask him what has happened 
-The Mayor describes a gruesome attack and tells you where it took place ",Would you like to [1] go to the attack site [2] talk to villagers: ,2,1,10,
-10,Village Square,2,"You approach a group of villagers and ask them if they have any information
-The villagers describe a mysterious creature",*no prompt* jumps to attack site,1,1,,
+4,Venturing into Cave,1,"You venture into the cave and almost bump into a troll.
+It notices your presence and charges towards you!",Attack Last,1,N/A,,
+5,Hide and Wait,1,"You wait to see what could be the cause of this carnage.
+After some time you notice the outline of what appears to be a troll
+It's now or never! You charge at the troll!",Attack First,1,N/A,,
+6,Residual Magic,0,"You follow the aura to a magical pond.
+You hear faint humming coming from the pond",Would you like to [1] Drink water [2] Follow creek: ,2,7,8,
+7,Drink Water,2,"You kneel down and take a sip from the pond.
+The water is very refreshing. You feel a new burst of energy to continue your journey.",You continue to follow the creek,1,8,,
+8,Follow Creek,0,"You come upon a dark entrance to an ominous cave.
+There are destroyed supplies strung out all over the outside of the cave.",Would you like to [1] Venture in [2] Hide in the nearby bushes and wait: ,2,4,5,
+9,Mayor's house,0,"You arrive at the Mayor's house and ask him what has happened and how you can help.
+The Mayor explains that something has been attacking merchants along the road.
+Supplies have stopped coming in for a while now.
+The Mayor gives you a map of the local roads and forest and points out where the 
+last attack occurred.
+",Would you like to [1] go to the attack site [2] talk to villagers: ,2,1,10,
+10,Village Square,2,"You approach a group of villagers and ask them if they have any information.
+The villagers describe a large monster that lives somewhere in the forest and eats the
+merchants and their horses. You make haste to the forest to ease their fears.",*no prompt* jumps to attack site,1,1,,
