@@ -113,7 +113,11 @@ public class Troll extends Entity{
         //Narrates series of desperate attacks; more attacks but each is less likely to hit target
         print_sleep("The troll makes wild attacks in its bloodied state!");
         claw(target, 5);
-        claw(target, 5);
-        bite(target, 5);
+        if (target.getStatus()){
+            claw(target, 5);
+        }
+        if (target.getStatus()){
+            bite(target, 5);
+        }
     }
 }

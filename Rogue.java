@@ -110,9 +110,9 @@ public class Rogue extends Entity{
             if (sneak){
                 print_sleep("Critical hit!");
                 damage += generic_roll(6,6);
-            }
-            if (getName().equalsIgnoreCase("Tony")){
-                damage = 999; // Easter egg: "Tony" was our common name when testing our game. As a seasoned rogue, Tony's sneak attacks are especially deadly.
+                if (getName().equalsIgnoreCase("Tony")){
+                    damage = 999; // Easter egg: "Tony" was our common name when testing our game. As a seasoned rogue, Tony's sneak attacks are especially deadly.
+                }
             }
             target.takeDMG(damage);
         }
@@ -120,7 +120,9 @@ public class Rogue extends Entity{
             print_sleep("But it's a miss!");
         }
         insight = false;
-        print_sleep(getName()+" needs to find another opening.");
+        if (target.getStatus()){
+            print_sleep(getName()+" needs to find another opening.");
+        }
     }
     public void analyze(Entity target){
         /*
