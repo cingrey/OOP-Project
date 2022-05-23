@@ -46,7 +46,7 @@ public class Troll extends Entity{
         if (getCurrHP()==0){
             setStatus(false);
         }
-        if (getStatus() && getCurrHP()<=(getMaxHP()/2) && !bloodied){
+        if (getStatus() && getCurrHP()<=(getMaxHP()/3) && !bloodied){
             bloodied = true;
             print_sleep("It's wounds are no longer healing!\nBut it's now rampaging!");
         }
@@ -76,10 +76,10 @@ public class Troll extends Entity{
     }
     @Override
     public void heal(){
-        //Troll heals flat 10 HP
+        //Troll heals flat 7 HP on its turn
         print_sleep("Some of the troll's wounds are closing up!");
-        setCurrHP(getCurrHP()+10);
-        if (getCurrHP()>=(getMaxHP()/2)){
+        setCurrHP(getCurrHP()+7);
+        if (getCurrHP()>=(getMaxHP()/3)){
             bloodied = false;
         }
     }
@@ -112,8 +112,8 @@ public class Troll extends Entity{
     public void flurry(Entity target){
         //Narrates series of desperate attacks; more attacks but each is less likely to hit target
         print_sleep("The troll makes wild attacks in its bloodied state!");
-        claw(target, 4);
-        claw(target, 4);
-        bite(target, 4);
+        claw(target, 5);
+        claw(target, 5);
+        bite(target, 5);
     }
 }
