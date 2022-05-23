@@ -19,9 +19,9 @@ public class Rogue extends Entity{
         setCurrHP(getMaxHP());
         setArmorClass(17);
         ArrayList<String> powers = new ArrayList<String>(3);
-        powers.add("[1] Ambush - calculated attack; more damage if hidden");
+        powers.add("[1] Ambush - calculated attack; critical damage if hidden");
         powers.add("[2] Analyze - gain insight into target; makes next attack more likely to hit");
-        powers.add("[3] Hide - become harder for target to hit; engages sneak status");
+        powers.add("[3] Hide - become harder for target to hit; empowers Ambush damage");
         setAbilities(powers);
         setStatus(true);
         sneak = false;
@@ -52,8 +52,7 @@ public class Rogue extends Entity{
             setArmorClass(17);
             print_sleep(getName() + " got knocked out of cover!");
             sneak = false;
-            insight = false;
-            print_sleep("*Stealth and Insight have worn off*");
+            print_sleep("*Stealth is no longer in effect*");
         }
     }
     @Override
@@ -79,6 +78,17 @@ public class Rogue extends Entity{
         setCurrHP(getMaxHP()+newHP);
         print_sleep(getName() + " tends to their wounds and recovers " + newHP + " hit points.");
     }
+    @Override
+    public void display_actions(){
+        //print stealth and insight values
+        super.display_actions();
+        if (isSneak()){
+            System.out.println("Hidden from enemy");
+        }
+        if (hasInsight()){
+            System.out.println("Ambush strategy ready");
+        }
+    }
 
     //new methods to implement attack options
     public void ambush(Entity target){
@@ -92,7 +102,7 @@ public class Rogue extends Entity{
         boolean advantage = false;
         if (insight){
             print_sleep("Attacking a weak point!");
-            advantage = check(target.getArmorClass(), 9);
+            advantage = check(target.getArmorClass(), 9); //insight essentially allows "second chance" to hit target
         }
         if (check(target.getArmorClass(), 9) || advantage){
             print_sleep("Successful strike!");
@@ -109,6 +119,8 @@ public class Rogue extends Entity{
         else{
             print_sleep("But it's a miss!");
         }
+        insight = false;
+        print_sleep(getName()+" needs to find another opening.");
     }
     public void analyze(Entity target){
         /*

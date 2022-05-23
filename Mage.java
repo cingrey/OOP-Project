@@ -80,6 +80,12 @@ public class Mage extends Entity{
         stats += "Mana: " + mana + "/" + MANA_MAX + "\n";
         return stats;
     }
+    @Override
+    public void display_actions(){
+        //print mana remaining
+        super.display_actions();
+        System.out.println("Remaining Mana: "+getMana());
+    }
 
     //new methods; implement spellcasting
     public boolean spendMana(int cost){
@@ -89,7 +95,7 @@ public class Mage extends Entity{
         */
         if (cost<=mana){
             mana -= cost;
-            print_sleep("This spell leaves " + getName() + " at " + mana + " mana!");
+            print_sleep(getName()+" spends "+cost+" mana!");
             return true;
         }
         else{

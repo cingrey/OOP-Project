@@ -117,12 +117,12 @@ public abstract class Entity extends Object{
         return (roll_d20()+modifier) >= difficulty;
     }
     public void display_actions(){
-        //Prints brief descriptions for each of the entity's combat abilities
-        
+        //Prints brief descriptions for each of the entity's combat abilities as well as some status information
         System.out.println("\nActions:");
         for(int i=0; i<abilities.size();i++){
             System.out.println(abilities.get(i));
         }
+        System.out.println("HP: "+ currHP);
     }
 
     public void takeDMG(int damage){
@@ -160,7 +160,7 @@ public abstract class Entity extends Object{
     /*
     print relevant statistics
     */
-        String stats = "Name: " + name + "\nHP: " + currHP + " / " + maxHP + "\nAC: " + armor_class + "\nAbilities:\n";
+        String stats = "Name: " + name + "\nHP: " + currHP + " / " + maxHP + "\nArmor: " + armor_class + "\nAbilities:\n";
         for(int i=0; i<abilities.size();i++){
             stats += abilities.get(i)+"\n";
         }

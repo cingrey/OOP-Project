@@ -78,6 +78,17 @@ public class Fighter extends Entity{
         setCurrHP(getCurrHP()+newHP);
         print_sleep(getName() + " draws upon willpower and recovers " + newHP + " hit points.");
     }
+    @Override
+    public void display_actions(){
+        //include fury and bracing status
+        super.display_actions();
+        if (isBracing()){
+            System.out.println("Bracing for next attack");
+        }
+        if (hasFury()){
+            System.out.println("Furious!");
+        }
+    }
 
     //new methods to implement attack options
     public void swordATK(Entity target){
