@@ -152,7 +152,7 @@ public class Mage extends Entity{
         if (spendMana(10)){
             print_sleep(getName() + " envelopes their hands with necrotic energy and reaches out!");
             if (check(target.getArmorClass(),9)){
-                int damage = target.getCurrHP()/2;
+                int damage = target.getCurrHP()/3;
                 print_sleep("And touches, draining the target's vitality!");
                 target.takeDMG(damage);
                 heal();
