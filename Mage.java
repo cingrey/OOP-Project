@@ -52,17 +52,17 @@ public class Mage extends Entity{
         Prompts user to choose from combat options/actions
         Narrates outcome of choice
         */
-        if (choice==1){
-            ChromaticOrb(target);
-        }
-        if (choice==2){
-            MagicMissile(target);
-        }
-        if (choice==3){
-            Shatter(target);
-        }
-        if (choice==4){
-            NecroticGrasp(target);
+        switch(choice){
+            case 1: ChromaticOrb(target);
+                    break;
+            case 2: MagicMissile(target);
+                    break;
+            case 3: Shatter(target);
+                    break;
+            case 4: NecroticGrasp(target);
+                    break;
+            default: heal(); //invalid choices handled in driver, but added for assurance
+                    break;
         }
     }
     @Override

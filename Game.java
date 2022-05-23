@@ -130,6 +130,9 @@ public class Game extends Object{
             String input = s.nextLine();
             try{
                 choice = Integer.parseInt(input);
+                if (!(1 <= choice && choice <= num_options)){
+                    System.out.println("Please input a number associated with a listed choice.");
+                }
             }
             catch(NumberFormatException e){
                 if (input.equals("q")){
