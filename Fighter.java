@@ -130,6 +130,7 @@ public class Fighter extends Entity{
             fury = false;
             int volley = 4;
             while (target.getStatus()&&volley>0){//implement volley; stop if target dies
+                volley--;
                 crossbowATK(target);
             }
         }
