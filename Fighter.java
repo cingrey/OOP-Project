@@ -17,7 +17,7 @@ public class Fighter extends Entity{
         setName(name);//this.name = name;
         setMaxHP(112);//maxHP = 112;
         setCurrHP(getMaxHP());//currHP = maxHP;
-        setArmorClass(19);//armor_class = 19;
+        setArmorClass(18);//armor_class = 18;
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("[1] Sword - basic melee strike; empowered by fury");
         powers.add("[2] Crossbow - basic ranged attack");

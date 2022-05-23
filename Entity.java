@@ -131,9 +131,9 @@ public abstract class Entity extends Object{
         Parameter:
         damage - (int) amount of damage to be applied to currHP
         */
-        System.out.println(name + " takes " + damage + " damage!");
+        print_sleep(name + " takes " + damage + " damage!");
         setCurrHP(currHP-damage);
-        System.out.println(name + " has " + currHP + " HP remaining!");
+        print_sleep(name + " has " + currHP + " HP remaining!");
         if (currHP==0){
             isAlive = false;
         }
@@ -173,7 +173,6 @@ public abstract class Entity extends Object{
         */
         System.out.println(message);
         try{
-            
             Thread.sleep(500);
         }
         catch(InterruptedException e){

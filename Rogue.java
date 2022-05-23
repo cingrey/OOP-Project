@@ -144,7 +144,7 @@ public class Rogue extends Entity{
         //sets sneak to true
         if (!sneak){
             sneak = true;
-            setArmorClass(22);
+            setArmorClass(21);
             print_sleep(getName() + " takes cover!");
         }
         else{
