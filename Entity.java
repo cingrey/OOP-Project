@@ -166,7 +166,11 @@ public abstract class Entity extends Object{
         }
         return stats;
     }
+
     public void print_sleep(String message){
+        /*
+        allow stream of narrative information to be printed at more readable pace to not overwhelm user
+        */
         System.out.println(message);
         try{
             

@@ -123,7 +123,7 @@ public class Mage extends Entity{
         unlike other spells, this always hits target
         */
         if (spendMana(4)){
-            print_sleep(getName() + " shoots 3 magical homing bolts from their fingers!");
+            print_sleep(getName() + " shoots 5 magical homing bolts from their fingers!");
             int damage = (generic_roll(1,4)+1)*5;
             print_sleep("They dig into the target!");
             target.takeDMG(damage);
