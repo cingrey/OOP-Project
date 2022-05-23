@@ -114,11 +114,11 @@ public class Fighter extends Entity{
     public void crossbowATK(Entity target){
         /*
         Narrates ranged attack with crossbow
-        fury will allow immediate second attack
+        fury will allow immediate additional attacks
         */
         print_sleep(getName() + " fires their crossbow!");
         if (check(target.getArmorClass(), 6)){
-            int damage = generic_roll(2,8)+2;
+            int damage = generic_roll(1,12)+2;
             print_sleep("And lands a solid hit!");
             target.takeDMG(damage);
         }
@@ -126,11 +126,12 @@ public class Fighter extends Entity{
             print_sleep("But misses!");
         }
         if (fury){
-            print_sleep("Furious volley! (2 more shots!)");
+            print_sleep("Furious volley! (4 more shots!)");
             fury = false;
-            crossbowATK(target);
-            crossbowATK(target);
-
+            int volley = 4;
+            while (target.getStatus()&&volley>0){//implement volley; stop if target dies
+                crossbowATK(target);
+            }
         }
     }
     public void brace(){
