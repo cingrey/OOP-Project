@@ -20,7 +20,7 @@ public class Fighter extends Entity{
         setArmorClass(18);//armor_class = 18;
         ArrayList<String> powers = new ArrayList<String>(3);
         powers.add("[1] Sword - basic melee strike; empowered by fury");
-        powers.add("[2] Crossbow - basic ranged attack");
+        powers.add("[2] Crossbow - basic ranged attack; loads faster with fury");
         powers.add("[3] Brace - reduces incoming damage; prepares fury");
         setAbilities(powers);
         setStatus(true);//isAlive = true;
