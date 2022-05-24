@@ -155,7 +155,7 @@ public class Mage extends Entity{
                 int damage = target.getCurrHP()/3;
                 print_sleep("And touches, draining the target's vitality!");
                 target.takeDMG(damage);
-                if (getCurrHP()<(getMaxHP()/2)){
+                if (getCurrHP()<(getMaxHP())){
                     heal();
                 }
             }
