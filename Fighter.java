@@ -14,7 +14,7 @@ public class Fighter extends Entity{
     private boolean bracing;
     private boolean fury;
     public Fighter(String name){
-        setName(name);//this.name = name;
+        setName(name);
         setMaxHP(112);//maxHP = 112;
         setCurrHP(getMaxHP());//currHP = maxHP;
         setArmorClass(18);//armor_class = 18;
@@ -140,7 +140,9 @@ public class Fighter extends Entity{
         if (!bracing){
             bracing = true;
             print_sleep(getName() + " braces for the next attack!");
-            heal(); 
+            if (getCurrHP()<(getMaxHP()/2)){
+                heal();
+            }
         }
         else{
             print_sleep("Oops! " + getName() + " is already bracing!");

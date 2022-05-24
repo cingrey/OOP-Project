@@ -70,7 +70,7 @@ public class Mage extends Entity{
         //Mage heals back HP based on 6-sided die with a modifier of +1
         int newHP = generic_roll(1,6)+1;
         setCurrHP(getCurrHP()+newHP);
-        setMana(mana+newHP);
+        setMana(mana+newHP/2);
         print_sleep(getName() + " channels free mana to recover " + newHP + " hit points and mana!");
     }
     @Override
@@ -155,7 +155,9 @@ public class Mage extends Entity{
                 int damage = target.getCurrHP()/3;
                 print_sleep("And touches, draining the target's vitality!");
                 target.takeDMG(damage);
-                heal();
+                if (getCurrHP()<(getMaxHP()/2)){
+                    heal();
+                }
             }
             else{
                 print_sleep("But they miss!");

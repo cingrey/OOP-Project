@@ -46,7 +46,7 @@ public class Troll extends Entity{
         if (getCurrHP()==0){
             setStatus(false);
         }
-        if (getStatus() && getCurrHP()<=(getMaxHP()/3) && !bloodied){
+        if (getStatus() && getCurrHP()<=(getMaxHP()/2) && !bloodied){
             bloodied = true;
             print_sleep("It's wounds are no longer healing!\nBut it's now rampaging!");
         }
@@ -59,7 +59,7 @@ public class Troll extends Entity{
         chooses attack option randomly
         if bloodied flag is true, always uses flurry
         */
-        if (getCurrHP()<getMaxHP() & !bloodied){
+        if (getCurrHP()<getMaxHP() && !bloodied){
             heal();
         }
         if (!bloodied){
@@ -76,10 +76,10 @@ public class Troll extends Entity{
     }
     @Override
     public void heal(){
-        //Troll heals flat 7 HP on its turn
+        //Troll heals flat 10 HP on its turn
         print_sleep("Some of the troll's wounds are closing up!");
-        setCurrHP(getCurrHP()+7);
-        if (getCurrHP()>=(getMaxHP()/3)){
+        setCurrHP(getCurrHP()+10);
+        if (getCurrHP()>(getMaxHP()/2)){
             bloodied = false;
         }
     }
@@ -90,7 +90,7 @@ public class Troll extends Entity{
         print_sleep("The troll goes for a bite!");
         if (check(target.getArmorClass(), modifier)){
             print_sleep("It chomps on " + target.getName() + "!");
-            int damage = generic_roll(1, 6)+4;
+            int damage = generic_roll(1, 10)+4;
             target.takeDMG(damage);
         }
         else{
